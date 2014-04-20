@@ -19,7 +19,7 @@ class GameBoard:
         self._dots = []
         self._lines = []
         self._boxes = []
-        self.create_dots()
+        # self.draw_dots()
         #self.create_lines()
         
         self._dotcolor = (255,0,0)
@@ -31,24 +31,31 @@ class GameBoard:
     
     def draw_dots(self):
         for x in range(self._columns):
-            for y in range(self._rows):
+            for y in range(self._rows): 
+                # print (str(x) + "," + str(y)) 
                 if (x== self._columns-1 and y== self._rows-1):
                     pygame.draw.rect(self._screen, (255,0,0), ((x+1)*100, (y+1)*100-4, 10, 10), 0)
-
                     break
-                    
+                
                 elif(x == self._columns-1):
-                    pygame.draw.line(self._screen, (255, 255, 255), ((x+1)*100+4, (y+1)*100), ((x+1)*100+4, (y+2)*100), 10)#vertical
+                    self._lines.append(pygame.draw.line(self._screen, (0, 0, 255), ((x+1)*100+4, (y+1)*100), ((x+1)*100+4, (y+2)*100), 10))
+                    pygame.draw.line(self._screen, (0, 0, 255), ((x+1)*100+4, (y+1)*100), ((x+1)*100+4, (y+2)*100), 10)#vertical
                 
                 elif(y== self._rows-1):
-                    pygame.draw.line(self._screen, (255, 255, 255), ((x+1)*100, (y+1)*100), ((x+2)*100, (y+1)*100), 10)#horizontal
+                    self._lines.append(pygame.draw.line(self._screen, (0, 255, 0), ((x+1)*100, (y+1)*100), ((x+2)*100, (y+1)*100), 10))
+                    pygame.draw.line(self._screen, (0, 255, 0), ((x+1)*100, (y+1)*100), ((x+2)*100, (y+1)*100), 10)#horizontal
                 
                 
                 else:
                     pygame.draw.line(self._screen, (255, 255, 255), ((x+1)*100+4, (y+1)*100), ((x+1)*100+4, (y+2)*100), 10)#vertical
                     pygame.draw.line(self._screen, (255, 255, 255), ((x+1)*100, (y+1)*100), ((x+2)*100, (y+1)*100), 10)#horizontal
-                pygame.draw.rect(self._screen, (255,0,0), ((x+1)*100, (y+1)*100-4, 10, 10), 0)
+                    self._lines.append(pygame.draw.line(self._screen, (255, 255, 255), ((x+1)*100+4, (y+1)*100), ((x+1)*100+4, (y+2)*100), 10))
+                    self._lines.append(pygame.draw.line(self._screen, (255, 255, 255), ((x+1)*100, (y+1)*100), ((x+2)*100, (y+1)*100), 10))
 
+                pygame.draw.rect(self._screen, (255,0,0), ((x+1)*100, (y+1)*100-4, 10, 10), 0)
+        # print(self._lines)
+        # print(len(self._lines))
+				
 
     def run(self): #only with a 3x3 (in  terms of boxes) --> 4x4 (in terms of dots)
         run = True
