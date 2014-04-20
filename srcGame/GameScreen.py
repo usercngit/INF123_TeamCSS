@@ -21,6 +21,7 @@ class GameScreen:
         self.width, self.height = dims
         self.RGB = RGB
         self.screen = pygame.display.set_mode(dims)
+        self.draw()
         
     def draw(self):
         self.screen.fill(self.RGB)

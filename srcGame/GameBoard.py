@@ -16,9 +16,20 @@ class GameBoard:
         self._rows = rows
         self._columns = columns
         self._screen = screen
+        self._dots = []
+        self._lines = []
+        self._boxes = []
         self.create_dots()
+        #self.create_lines()
+        
+        self._dotcolor = (255,0,0)
+        self._dotshape = (10, 10)
+        
+        self._linecolor = (100,100,255)
+        self._linewideshape = (100, 10)
+        self._linetallshape = (10, 100)
     
-    def create_dots(self):
+    def draw_dots(self):
         for x in range(self._columns):
             for y in range(self._rows):
                 if (x== self._columns-1 and y== self._rows-1):

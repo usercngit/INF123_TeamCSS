@@ -35,10 +35,13 @@ def gameInit():
     FRAMERATE = 40
     
     #create display
-    dims = 400, 400
-    RGB = 100, 50, 50
+    dims = 800, 720
+    RGB = 100, 150, 150
     global SCREEN
     SCREEN = GameScreen.GameScreen(dims, RGB)
+    
+    global g
+    g = GameBoard.GameBoard(4,4,SCREEN.screen)
     
     global GAME_STATE
     GAME_STATE = 1;
@@ -49,6 +52,9 @@ def drawGame():
     Draw screen, then dots, then lines, then boxes
     """
     SCREEN.draw()
+    g.create_dots()
+    pygame.display.update()
+    g.run()
     
 ######################################################################
 def processInput():
