@@ -52,14 +52,14 @@ class GameBoard:
         #make Horizontal
         for y in range(self._rows):
             for x in range(self._columns-1):
-                self._lines.append(pygame.Rect( (x*self._distBetweenDots, y*self._distBetweenDots +1) , (self._linewideshape) ))
+                self._lines.append(pygame.Rect( (x*self._distBetweenDots , y*self._distBetweenDots +1) , (self._linewideshape) ))
                 self._linecolors.append(self._linecolor)
         #make Vertical
         for x in range(self._rows):
             for y in range(self._columns-1):
                 self._lines.append(pygame.Rect( (x*self._distBetweenDots +1, y*self._distBetweenDots) , (self._linetallshape) ))
                 self._linecolors.append(self._linecolor)
-    
+
     def draw_lines(self):
         for i in range(len(self._lines)):
             pygame.draw.rect(self._drawWindow, self._linecolors[i], self._lines[i])
@@ -76,10 +76,16 @@ class GameBoard:
             
                 newBox = {top, bottom, left, right, None}
                 self._boxes.append(newBox)
-            
+
+    def dot_collision(self, mousePos):
+        for i in range(len(self._dots)):
+            if self._dots[i].collidepoint(mousePos):
+                return False
+        return True
+
     def choose_line(self, mousePos):
         for i in range(len(self._lines)):
-            if self._lines[i].collidepoint(mousePos):
+            if self._lines[i].collidepoint(mousePos) and self.dot_collision(mousePos): 
                 self._linecolors[i] = (0,0,0)
                 return i
         return None#instead of a boolean, lineIndex or None
