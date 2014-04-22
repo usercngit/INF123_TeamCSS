@@ -41,7 +41,10 @@ def gameInit():
     SCREEN = GameScreen.GameScreen(dims, RGB)
     
     global g
-    g = GameBoard.GameBoard(4,4,SCREEN.screen)
+    g = GameBoard.GameBoard(4,4,SCREEN)
+    
+    g.create_dots()
+    g.create_lines()
     
     global GAME_STATE
     GAME_STATE = 1;
@@ -52,6 +55,7 @@ def drawGame():
     Draw screen, then dots, then lines, then boxes
     """
     SCREEN.draw()
+    g.draw_lines()
     g.draw_dots()
     pygame.display.update()
     g.run()
