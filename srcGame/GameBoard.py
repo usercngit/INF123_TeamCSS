@@ -6,6 +6,8 @@
 
 import pygame
 
+from collections import namedtuple
+
 pygame.init()
 
 #TODO
@@ -58,6 +60,20 @@ class GameBoard:
     def draw_lines(self):
         for line in self._lines:
             pygame.draw.rect(self._drawWindow, self._linecolor, line)
+            
+    def define_boxes(self):
+        Edge = namedtuple("Edge", ["name", "index", "claimed"])
+        
+        for n in range(self._rows-1):
+            for m in range(self._columns-1):
+                top = Edge(name = "top", index = (len(self._boxes)), claimed = False)
+                bottom = Edge(name = "bottom", index = ((len(self._boxes)) + (self._columns-1)), claimed = False)
+                left = Edge(name = "left", index = ((len(self._boxes)) + ( (self._columns*self._rows) - (self._rows-n) )), claimed = False)
+                right = Edge(name = "right", index = left.index+1, claimed = False)
+            
+                newBox = {top, bottom, left, right, None}
+                self._boxes.append(newBox)
+                print top, bottom, left, right
             
     def choose_line(self, mousePos):
         x,y = mousePos

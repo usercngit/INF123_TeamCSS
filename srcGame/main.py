@@ -57,6 +57,7 @@ def drawGame():
     SCREEN.draw()
     g.draw_lines()
     g.draw_dots()
+    g.define_boxes()
     pygame.display.update()
     g.run()
     
