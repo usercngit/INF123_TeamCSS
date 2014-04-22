@@ -34,6 +34,17 @@ def gameInit():
     global FRAMERATE
     FRAMERATE = 40
     
+    """
+        Program State overview:
+            0 = loading
+            1 = main screen
+            2 = game
+            3 = game lobby
+            4 = online game
+    """
+    global PROG_STATE
+    PROG_STATE = 0
+    
     #create display
     dims = 800, 720
     RGB = 100, 150, 150
@@ -59,13 +70,18 @@ def drawGame():
     g.draw_dots()
     g.define_boxes()
     pygame.display.update()
-    g.run()
+    #g.run()
     
 ######################################################################
 def processInput():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if PROG_STATE == 1:
+                return
+            else:
+                g.choose_line(event.pos)
     return
 
 ######################################################################
