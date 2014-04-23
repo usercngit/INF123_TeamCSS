@@ -86,7 +86,7 @@ class GameBoard:
             
     def choose_line(self, mousePos):
         for i in range(len(self._lines)):
-            if self._lines[i].collidepoint(mousePos):
+            if self._lines[i].collidepoint(mousePos) and self.dot_collision(mousePos):
                 self._linecolors[i] = (0,0,0)
                 return i
         return None#instead of a boolean, lineIndex or None
@@ -152,3 +152,11 @@ class GameBoard:
             return True
         else:
             return False
+        
+    def dot_collision(self, mousePos):
+        for i in range(len(self._dots)):
+            if self._dots[i].collidepoint(mousePos):
+                return False
+        return True
+    
+    
