@@ -18,8 +18,8 @@ pygame.init()
     # board objects
 class GameBoard:
     def __init__(self, rows, columns, screen):
-        self._rows = rows
-        self._columns = columns
+        self._rows = max(rows, 2)
+        self._columns = max(columns, 2)
         self._screen = screen
         self._drawWindow = screen.screen;
         self._dots = []
@@ -30,7 +30,7 @@ class GameBoard:
         
         dotSize = 10
         
-        lineWidth = dotSize - 2
+        lineWidth = int(dotSize*0.8)
         lineLength = dotSize*10
         
         self._distBetweenDots = lineLength
@@ -142,11 +142,12 @@ class GameBoard:
         else:
             self._validLines.remove(index)
             self.update_boxes(index)
+            
+            self.game_over()
             return True
-        
-        self.game_over()
     
     def game_over(self):
+        print len(self._validLines)
         if len(self._validLines) == 0:
             print "GAMEOVERS"
             return True

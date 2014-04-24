@@ -46,13 +46,13 @@ def gameInit():
     PROG_STATE = 0
     
     #create display
-    dims = 800, 720
+    dims = 800, 640
     RGB = 100, 150, 150
     global SCREEN
     SCREEN = GameScreen.GameScreen(dims, RGB)
     
     global g
-    g = GameBoard.GameBoard(4,4,SCREEN)
+    g = GameBoard.GameBoard(3,3,SCREEN)
     
     g.setup_board()
     
