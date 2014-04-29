@@ -29,6 +29,7 @@ class GameBoard:
         self._boxes = []
         self._player_no = player_no #number of players
         self._players = [] #player list
+        self._boxmake = []
         
         dotSize = 10
         
@@ -111,26 +112,32 @@ class GameBoard:
     
     def update_boxes(self, index):
         #for every box that has the index of this line in it's named tuple, update that Edge to True
-        print index
+        #print index
         for i in range(len(self._boxes)):
             top, bottom, left, right, owner = self._boxes[i]
             if index == top.index:
                 top = Edge(name = "top", index = index, claimed = True)
-                print "TT"
+                #print "TT"
             if index == bottom.index:
                 bottom = Edge(name = "bottom", index = index, claimed = True)
-                print "BT"
+                #print "BT"
             if index == left.index:
                 left = Edge(name = "left", index = index, claimed = True)
-                print "LT"
+                #print "LT"
             if index == right.index:
                 right = Edge(name = "right", index = index, claimed = True)
-                print "RT"
+                #print "RT"
                 
             self._boxes[i] = [top, bottom, left, right, owner]
             
             if(top.claimed == True) and (bottom.claimed == True) and (left.claimed == True) and (right.claimed == True):
-                print "BOXMAKE! " + str(i)
+                #print "BOXMAKE! " + str(i)
+                if self._boxes[i] not in self._boxmake:
+                    self._boxmake.append(self._boxes[i])
+                    self._players[0].score_inc()
+                    print(self._players[0].get_score()) 
+                    #print(self._boxmake)
+
 
     #return False for failed move, return True for success 
     def make_move(self, mousePos):
@@ -150,7 +157,7 @@ class GameBoard:
             return True
     
     def game_over(self):
-        print len(self._validLines)
+        #print len(self._validLines)
         if len(self._validLines) == 0:
             print "GAMEOVERS"
             return True

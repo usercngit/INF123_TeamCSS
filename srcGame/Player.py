@@ -12,7 +12,11 @@ class Player:
 		self._score = 0
 		
 	def score_inc(self):
-		score +=1
+		self._score +=1
 	
 	def get_color(self):
 		return self._color
+
+	def get_score(self):
+		return self._score
+		
