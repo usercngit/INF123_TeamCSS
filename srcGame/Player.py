@@ -13,3 +13,6 @@ class Player:
 		
 	def score_inc(self):
 		score +=1
+	
+	def get_color(self):
+		return self._color

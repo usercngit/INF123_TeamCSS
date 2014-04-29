@@ -17,7 +17,7 @@ pygame.init()
     # Size
     # board objects
 class GameBoard:
-    def __init__(self, rows, columns, screen):
+    def __init__(self, rows, columns, screen, player_no=1):
         self._rows = max(rows, 2)
         self._columns = max(columns, 2)
         self._screen = screen
@@ -27,6 +27,8 @@ class GameBoard:
         self._validLines = []
         self._linecolors = []
         self._boxes = []
+        self._player_no = player_no #number of players
+        self._players = [] #player list
         
         dotSize = 10
         
@@ -41,7 +43,7 @@ class GameBoard:
         self._linecolor = (255,255,255)
         self._linewideshape = (lineLength, lineWidth)
         self._linetallshape = (lineWidth, lineLength)
-    
+
     def create_dots(self):
         for x in range(self._columns):
             for y in range(self._rows): 
@@ -87,7 +89,8 @@ class GameBoard:
     def choose_line(self, mousePos):
         for i in range(len(self._lines)):
             if self._lines[i].collidepoint(mousePos) and self.dot_collision(mousePos):
-                self._linecolors[i] = (0,0,0)
+                player_color = self._players[0].get_color() #TODO: need to find a way to find which player
+                self._linecolors[i] = player_color
                 return i
         return None#instead of a boolean, lineIndex or None
     
@@ -159,5 +162,8 @@ class GameBoard:
             if self._dots[i].collidepoint(mousePos):
                 return False
         return True
-    
+
+    def add_player(self, player):
+        if len(self._players) < self._player_no:
+            self._players.append(player)
     

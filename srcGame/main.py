@@ -8,6 +8,7 @@ import pygame
 
 import GameScreen
 import GameBoard
+from Player import Player
 
 
 """
@@ -47,12 +48,15 @@ def gameInit():
     
     #create display
     dims = 800, 640
-    RGB = 100, 150, 150
+    #RGB = 100, 150, 150
+    RGB = 0,0,0 
     global SCREEN
     SCREEN = GameScreen.GameScreen(dims, RGB)
     
     global g
     g = GameBoard.GameBoard(3,3,SCREEN)
+    player_one = Player("CSS", (255,0,0))
+    g.add_player(player_one)
     
     g.setup_board()
     
