@@ -15,6 +15,8 @@ and will contain displays of game objects
     # put the game board in it
 
 import pygame
+import GameBoard
+from Player import Player
 
 class GameScreen:
     def __init__ (self, dims, RGB):
@@ -22,6 +24,14 @@ class GameScreen:
         self.RGB = RGB
         self.screen = pygame.display.set_mode(dims)
         self.draw()
-        
+
+    def drawScore(self, score):
+        font = pygame.font.Font(None, 36)
+        label = font.render("Score: " + str(score), 1, (255, 255, 255))
+        textpos = label.get_rect()
+        textpos.centerx = self.screen.get_rect().centerx
+        self.screen.blit(label, textpos)
+
     def draw(self):
         self.screen.fill(self.RGB)
+

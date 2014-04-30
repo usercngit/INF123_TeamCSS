@@ -55,6 +55,8 @@ def gameInit():
     
     global g
     g = GameBoard.GameBoard(3,3,SCREEN)
+
+    global player_one
     player_one = Player("CSS", (255,0,0))
     g.add_player(player_one)
     
@@ -94,5 +96,7 @@ while True:
     if GAME_STATE == 1:
         processInput()
         drawGame()
+        SCREEN.drawScore(player_one.get_score())
         pygame.display.update()
         GAMECLOCK.tick(FRAMERATE)
+        

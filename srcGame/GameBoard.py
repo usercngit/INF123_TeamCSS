@@ -31,15 +31,15 @@ class GameBoard:
         self._players = [] #player list
         self._boxmake = []
         
-        dotSize = 10
+        self._dotSize = 10
         
-        lineWidth = int(dotSize*0.8)
-        lineLength = dotSize*10
+        lineWidth = int(self._dotSize*0.8)
+        lineLength = self._dotSize*10
         
         self._distBetweenDots = lineLength
         
         self._dotcolor = (255,0,0)
-        self._dotshape = (dotSize, dotSize)
+        self._dotshape = (self._dotSize, self._dotSize)
         
         self._linecolor = (255,255,255)
         self._linewideshape = (lineLength, lineWidth)
@@ -49,10 +49,14 @@ class GameBoard:
         for x in range(self._columns):
             for y in range(self._rows): 
                 self._dots.append(pygame.Rect(((x)*self._distBetweenDots, (y)*self._distBetweenDots), (self._dotshape)))
+
+
         
     def draw_dots(self):
         for dot in self._dots:
             pygame.draw.rect(self._drawWindow, self._dotcolor, dot)
+        
+
             
     def create_lines(self):
         """ The number of horizontal lines === Rows*Columns - [the smaller of the two]"""
@@ -103,7 +107,14 @@ class GameBoard:
     def draw(self):
         self.draw_lines()
         self.draw_dots()
-        
+        self.draw_boxes()
+
+    def draw_boxes(self):
+        for i in range(len(self._boxes)):
+            top, bottom, left, right, owner = self._boxes[i]
+            if(top.claimed == True) and (bottom.claimed == True) and (left.claimed == True) and (right.claimed == True):
+                pygame.draw.rect(self._drawWindow, (0,255,0), (self._lines[i].left+(self._dotSize-1), self._lines[i].top+(self._dotSize-1), 100-(self._dotSize-1), 100-(self._dotSize-1)), 0)
+
     def isValid_move(self, index):
         for line in self._validLines:
             if line == index:
@@ -135,8 +146,11 @@ class GameBoard:
                 if self._boxes[i] not in self._boxmake:
                     self._boxmake.append(self._boxes[i])
                     self._players[0].score_inc()
-                    print(self._players[0].get_score()) 
+                    print("Score:" + str(self._players[0].get_score()))
+                    # print self._lines[i]
                     #print(self._boxmake)
+
+
 
 
     #return False for failed move, return True for success 
@@ -173,4 +187,3 @@ class GameBoard:
     def add_player(self, player):
         if len(self._players) < self._player_no:
             self._players.append(player)
-    
