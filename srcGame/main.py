@@ -70,7 +70,7 @@ def drawGame():
     """
     Draw screen, then dots, then lines, then boxes
     """
-    SCREEN.draw()
+    SCREEN.draw(player_one.get_score())
     g.draw()
     pygame.display.update()
     #g.run()
@@ -92,11 +92,11 @@ def processInput():
 
 gameInit()
 while True:
+
     
     if GAME_STATE == 1:
         processInput()
         drawGame()
-        SCREEN.drawScore(player_one.get_score())
         pygame.display.update()
         GAMECLOCK.tick(FRAMERATE)
         
