@@ -70,7 +70,7 @@ def drawGame():
     """
     Draw screen, then dots, then lines, then boxes
     """
-    SCREEN.draw(player_one.get_score())
+    SCREEN.draw(player_one.get_score(), g.game_over()) ##HERE
     g.draw()
     pygame.display.update()
     #g.run()

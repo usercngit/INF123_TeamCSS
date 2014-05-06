@@ -173,7 +173,6 @@ class GameBoard:
     def game_over(self):
         #print len(self._validLines)
         if len(self._validLines) == 0:
-            print "GAMEOVERS"
             return True
         else:
             return False

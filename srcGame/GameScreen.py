@@ -24,7 +24,7 @@ class GameScreen:
         self.RGB = RGB
         self.screen = pygame.display.set_mode(dims)
         # self.drawScore(2)
-        self.draw(2)
+        self.draw(2, False)
 
         
 
@@ -35,7 +35,17 @@ class GameScreen:
         textpos.centerx = self.screen.get_rect().centerx
         self.screen.blit(label, textpos)
 
-    def draw(self, score):
+    def drawGameOver(self, gameover):
+        if gameover:
+            font = pygame.font.Font(None, 40)
+            label = font.render("Game Over", 1, (255,0,0))
+            textpos = label.get_rect()
+            textpos.centery = self.screen.get_rect().centery
+            self.screen.blit(label, textpos)
+
+    def draw(self, score, gameover):
         self.screen.fill(self.RGB)
         self.drawScore(score)
+        self.drawGameOver(gameover)
+
 
