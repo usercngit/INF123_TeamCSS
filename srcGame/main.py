@@ -8,6 +8,7 @@ import pygame
 
 import GameScreen
 import GameBoard
+from Player import Player
 
 
 """
@@ -46,16 +47,20 @@ def gameInit():
     PROG_STATE = 0
     
     #create display
-    dims = 800, 720
-    RGB = 100, 150, 150
+    dims = 800, 640
+    #RGB = 100, 150, 150
+    RGB = 0,0,0 
     global SCREEN
     SCREEN = GameScreen.GameScreen(dims, RGB)
     
     global g
-    g = GameBoard.GameBoard(4,4,SCREEN)
+    g = GameBoard.GameBoard(3,3,SCREEN)
+
+    global player_one
+    player_one = Player("CSS", (255,0,0))
+    g.add_player(player_one)
     
-    g.create_dots()
-    g.create_lines()
+    g.setup_board()
     
     global GAME_STATE
     GAME_STATE = 1;
@@ -65,10 +70,8 @@ def drawGame():
     """
     Draw screen, then dots, then lines, then boxes
     """
-    SCREEN.draw()
-    g.draw_lines()
-    g.draw_dots()
-    g.define_boxes()
+    SCREEN.draw(player_one.get_score(), g.game_over()) ##HERE
+    g.draw()
     pygame.display.update()
     #g.run()
     
@@ -79,18 +82,21 @@ def processInput():
             exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if PROG_STATE == 1:
+                
                 return
             else:
-                g.choose_line(event.pos)
+                g.make_move(event.pos)
     return
 
 ######################################################################
 
 gameInit()
 while True:
+
     
     if GAME_STATE == 1:
         processInput()
         drawGame()
         pygame.display.update()
         GAMECLOCK.tick(FRAMERATE)
+        
