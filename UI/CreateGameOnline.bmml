@@ -1,0 +1,37 @@
+<mockup version="1.0" skin="wireframe" fontFace="Balsamiq Sans" measuredW="386" measuredH="547" mockupW="307" mockupH="452">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="79" y="128" w="307" h="419" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="173" y="95" w="-1" h="-1" measuredW="121" measuredH="21" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Create%20Game%20Online</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Label" x="94" y="164" w="-1" h="-1" measuredW="109" measuredH="21" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Number%20of%20Players</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="94" y="224" w="-1" h="-1" measuredW="64" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Board%20Size</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="106" y="260" w="-1" h="-1" measuredW="51" measuredH="21" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Columns</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="106" y="304" w="-1" h="-1" measuredW="33" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Rows</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="310" y="508" w="-1" h="-1" measuredW="62" measuredH="24" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>Game%26bm%3BGame.bmml%26bm%3BGame.bmml%26bm%3BGame.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22231%2C413%2C293%2C437%22%20href%3D%22Game.bmml%22%20alt%3D%22Game%22%20id%3D%228%22/%3E</map>
+        <text>Create</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

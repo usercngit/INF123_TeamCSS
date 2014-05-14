@@ -1,0 +1,33 @@
+<mockup version="1.0" skin="wireframe" fontFace="Balsamiq Sans" measuredW="912" measuredH="483" mockupW="833" mockupH="393">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="79" y="128" w="664" h="355" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="392" y="90" w="-1" h="-1" measuredW="39" measuredH="21" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Game%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::VRule" x="406" y="128" w="-1" h="355" measuredW="10" measuredH="100" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Paragraph" x="431" y="143" w="297" h="100" measuredW="200" measuredH="80" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Players%0A%09Player%20A%09%0910pts%09%0A%09Player%20B%09%0920pts%0A%09Player%20C%20***%09%0920pts</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="668" y="438" w="-1" h="-1" measuredW="54" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>Lobby%26bm%3BLobby.bmml%26bm%3BLobby.bmml%26bm%3BLobby.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22589%2C348%2C643%2C372%22%20href%3D%22Lobby.bmml%22%20alt%3D%22Lobby%22%20id%3D%229%22/%3E</map>
+        <text>QUIT</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="219" y="275" w="-1" h="-1" measuredW="50" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>BOARD*</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::StickyNote" x="756" y="368" w="156" h="115" measuredW="109" measuredH="123" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Quit%0A%20%0ALocally%20--%3E%20Menu%0A%20%0AOnline%20--%3E%20Lobby</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
