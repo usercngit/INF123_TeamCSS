@@ -15,8 +15,6 @@ and will contain displays of game objects
     # put the game board in it
 
 import pygame
-import GameBoard
-from Player import Player
 
 class GameScreen:
     def __init__ (self, dims, RGB):

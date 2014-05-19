@@ -6,8 +6,9 @@
 
 import pygame
 
-import GameScreen
-import GameBoard
+from Viewport import Viewport
+from GameScreen import GameScreen
+from Board import Board
 from Player import Player
 
 
@@ -46,15 +47,11 @@ def gameInit():
     global PROG_STATE
     PROG_STATE = 0
     
-    #create display
-    dims = 800, 640
-    #RGB = 100, 150, 150
-    RGB = 0,0,0 
-    global SCREEN
-    SCREEN = GameScreen.GameScreen(dims, RGB)
+    global VIEWPORT
+    VIEWPORT = Viewport(60,60)
     
     global g
-    g = GameBoard.GameBoard(3,3,SCREEN)
+    g = Board(3,3,1)
 
     global player_one
     player_one = Player("CSS", (255,0,0))
@@ -71,7 +68,7 @@ def drawGame():
     Draw screen, then dots, then lines, then boxes
     """
     SCREEN.draw(player_one.get_score(), g.game_over()) ##HERE
-    g.draw()
+    g.draw(SCREEN.screen)
     pygame.display.update()
     #g.run()
     
@@ -91,8 +88,8 @@ def processInput():
 ######################################################################
 
 gameInit()
-while True:
 
+while True:
     
     if GAME_STATE == 1:
         processInput()
