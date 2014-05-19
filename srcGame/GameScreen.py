@@ -48,4 +48,7 @@ class GameScreen:
         self.drawScore(score)
         self.drawGameOver(gameover)
 
+    def drawWindow(self):
+        self.screen.fill(self.RGB)
+
 
