@@ -29,7 +29,8 @@ TODO: Import settings from a text file
 ######################################################################
 def gameInit():
     pygame.init()
-    
+    global TURN 
+    TURN = 0
     global GAMECLOCK
     GAMECLOCK = pygame.time.Clock()
     global FRAMERATE
@@ -57,8 +58,16 @@ def gameInit():
     g = GameBoard.GameBoard(3,3,SCREEN)
 
     global player_one
-    player_one = Player("CSS", (255,0,0))
+    player_one = Player("Shibani", (255,0,0))
     g.add_player(player_one)
+
+    global player_two
+    player_two = Player("Sufana", (0,255,0))
+    g.add_player(player_two)
+
+    global player_three
+    player_three = Player("Chris", (0,0,255))
+    g.add_player(player_three)
     
     g.setup_board()
     
@@ -70,7 +79,7 @@ def drawGame():
     """
     Draw screen, then dots, then lines, then boxes
     """
-    SCREEN.draw(player_one.get_score(), g.game_over()) ##HERE
+    SCREEN.draw(g.game_over(), g._players, g._currentPlayer) ##HERE
     g.draw()
     pygame.display.update()
     #g.run()
@@ -82,10 +91,14 @@ def processInput():
             exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if PROG_STATE == 1:
-                
                 return
             else:
-                g.make_move(event.pos)
+                global TURN
+                if (g.make_move(event.pos, TURN)):
+                    if (TURN  + 1) >= len(g._players):
+                        TURN = 0
+                    else:
+                        TURN += 1
     return
 
 ######################################################################

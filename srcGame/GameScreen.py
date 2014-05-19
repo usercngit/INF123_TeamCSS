@@ -24,13 +24,13 @@ class GameScreen:
         self.RGB = RGB
         self.screen = pygame.display.set_mode(dims)
         # self.drawScore(2)
-        self.draw(2, False)
+        # self.draw(2, False)
 
         
 
-    def drawScore(self, score):
+    def drawScore(self, currentPlayer):
         font = pygame.font.Font(None, 36)
-        label = font.render("Score: " + str(score), 1, (255, 0, 0))
+        label = font.render("Score: " + str(currentPlayer._score), 1, (255, 0, 0))
         textpos = label.get_rect()
         textpos.centerx = self.screen.get_rect().centerx
         self.screen.blit(label, textpos)
@@ -43,9 +43,28 @@ class GameScreen:
             textpos.centery = self.screen.get_rect().centery
             self.screen.blit(label, textpos)
 
-    def draw(self, score, gameover):
+    def drawPlayerTurn(self, currentPlayer):
+        font = pygame.font.Font(None, 40)
+        label = font.render("It is " + currentPlayer._name + "'s turn", 1, (255,0,0))
+        textpos = label.get_rect()
+        textpos.centery = self.screen.get_rect().centery + 50
+        self.screen.blit(label, textpos)
+
+    def drawScore(self, Players):
+        vertical_space = 0
+        font = pygame.font.Font(None, 40)
+        for player in Players:
+            vertical_space += 50
+            label = font.render(player._name + ": " + str(player._score), 1, (255,0,0))
+            textpos = label.get_rect()
+            textpos.centery = self.screen.get_rect().centerx + vertical_space
+            self.screen.blit(label, textpos)
+
+    def draw(self, gameover, Players, currentPlayer):
         self.screen.fill(self.RGB)
-        self.drawScore(score)
+        self.drawScore(Players)
         self.drawGameOver(gameover)
+        self.drawPlayerTurn(currentPlayer)
+
 
 
