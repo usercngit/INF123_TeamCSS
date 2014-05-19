@@ -3,22 +3,31 @@
 @author: Sofanah
 @author: Shibani
 """
-import Viewport
 from GObject import GObject, Box
+from Player import Player
 
 class Board:
-    def __init__(self, rows = 2, columns = 2, player_no=2):
+    def __init__(self, rows = 2, columns = 2, player_no=2, viewheight, viewwidth):
+        self._started = False
+        self._ended = False
+        
         self._rows = max(rows, 2)
         self._columns = max(columns, 2)
+        
+        startpos = (viewwidth - viewwidth/2, viewheight - viewheight/2)
+        startshape = (viewwidth/2, viewheight/2)
+        startcolor = (150, 150, 200)
+        startButton = GObject(startpos, startshape, startcolor)
         
         dots = []
         lines = []
         boxes = []
-        self._objects = {'dots':dots, 'lines':lines, 'boxes':boxes}
+        self._objects = {'dots':dots, 'lines':lines, 'boxes':boxes, 'start':startButton}
         
         self._validLines = []
         self._filledBoxes = []
         
+        self._currentPlayer = None
         self._player_no = player_no #number of players
         self._players = [] #player list
         
@@ -94,35 +103,41 @@ class Board:
                 
                 i = i+1
                 
+    def add_players(self):
+        return
+                
 ####################### DRAWING #########################
     def draw(self, view):
-        self.drawObj('boxes', view)
-        self.drawObj('lines', view)
-        self.drawObj('dots', view)
-    
-    def drawObj(self, name, view):
-        for obj in self._objects[name]:
-            obj.draw(view)
+        for name in self._objects.keys():
+            for obj in self._objects[name]:
+                obj.draw(view)
 
 ################# GAME LOGIC ###################
-    #return False for failed move, return True for success 
-    def make_move(self, mousePos):
-        index = self.choose_line(mousePos)
-        
-        #check if None --> failed choice of click
-        if index == None:
-            return False
-        #if not valid move, line was already chosen
-        elif not self.isValid_move(index):
-            print "invalid"
-            return False
+    def update(self, mousePos):
+        if not self._started:
+            if len(self._players == self._player_no):
+                self._started = True
+                self.setup_board()
+            elif self._objects['start'].collide(mousePos) and (len(self._players) >= 2):
+                self._started = True
+                self.setup_board()
+                self._objects.pop('start')
         else:
-            self._objects['lines'][index].linewidth = 0
-            self._validLines.remove(index)
-            self.update_boxes(index)
+            index = self.choose_line(mousePos)
+        
+                #check if None --> failed choice of click
+            if index == None:
+                return False
+        #if not valid move, line was already chosen
+            elif not self.isValid_move(index):
+                return False
+            else:
+                self._objects['lines'][index].linewidth = 0
+                self._validLines.remove(index)
+                self.update_boxes(index)
             
-            self.game_over()
-            return True
+                self.game_over()
+                return True
         
     def choose_line(self, mousePos):
         for i, line in enumerate(self._objects['lines']):
@@ -150,11 +165,18 @@ class Board:
     
     def game_over(self):
         if len(self._validLines) == 0:
-            return True
-        else:
-            return False
+            self._ended = True
+        return self._ended
 
+    def remove_player(self, player):
+        if player in self._players:
+            self._players.remove(player)
+            if len(self._players) == 0:
+                self._ended = True
+        
     def add_player(self, player):
-        if len(self._players) < self._player_no:
-            self._players.append(player)
+        #allow adding players
+        if not self._started:
+            if len(self._players) < self._player_no:
+                self._players.append(player)
             

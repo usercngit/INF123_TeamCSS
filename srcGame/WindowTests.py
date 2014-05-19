@@ -2,12 +2,6 @@
 @author: Chris
 '''
 
-'''
-@author: Chris
-@author: Sofanah
-@author: Shibani
-'''
-
 import pygame
 import Viewport
 from Board import Board
