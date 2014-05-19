@@ -67,4 +67,7 @@ class GameScreen:
         self.drawPlayerTurn(currentPlayer)
 
 
+    def drawWindow(self):
+        self.screen.fill(self.RGB)
+
 
