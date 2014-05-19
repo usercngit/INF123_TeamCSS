@@ -11,11 +11,11 @@
         <text>Hide%20if%20game%20has%20been%20started%0A%20%0AHide%20if%20game%20has%20reached%20required%20number%20of%20players</text>
       </controlProperties>
     </control>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="270" y="508" w="-1" h="-1" measuredW="101" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="249" y="508" w="-1" h="-1" measuredW="130" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
         <href>CreateGameOnline%26bm%3BCreateGameOnline.bmml%26bm%3BCreateGameOnline.bmml%26bm%3BCreateGameOnline.bmml</href>
-        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22191%2C416%2C292%2C440%22%20href%3D%22CreateGameOnline.bmml%22%20alt%3D%22CreateGameOnline%22%20id%3D%229%22/%3E</map>
-        <text>Create%20Game</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22170%2C416%2C300%2C440%22%20href%3D%22CreateGameOnline.bmml%22%20alt%3D%22CreateGameOnline%22%20id%3D%229%22/%3E</map>
+        <text>Create%20New%20Game</text>
       </controlProperties>
     </control>
     <control controlID="10" controlTypeID="__group__" x="115" y="209" w="234" h="162" measuredW="234" measuredH="162" zOrder="3" locked="false" isInGroup="-1">
