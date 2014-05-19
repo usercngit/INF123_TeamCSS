@@ -38,21 +38,21 @@ class CreateGame:
 
 	def drawPlayers(self):
 		font = pygame.font.Font(None, 40)
-		label = font.render("Number of Players: ", 1, (255,0,0))
+		label = font.render("Number of Players: " + str(self._number_of_players), 1, (255,0,0))
 		textpos = label.get_rect()
 		textpos.centery = (self._screen.screen.get_rect().centery) - 200
 		self._screen.screen.blit(label, textpos)
 
 	def drawRows(self):
 		font = pygame.font.Font(None, 40)
-		label = font.render("Number of Board Rows: ", 1, (255,0,0))
+		label = font.render("Number of Board Rows: " + str(self._rows), 1, (255,0,0))
 		textpos = label.get_rect()
 		textpos.centery = (self._screen.screen.get_rect().centery) - 100
 		self._screen.screen.blit(label, textpos)
 
 	def drawColumns(self):
 		font = pygame.font.Font(None, 40)
-		label = font.render("Number of Board Columns: ", 1, (255,0,0))
+		label = font.render("Number of Board Columns: " + str(self._columns), 1, (255,0,0))
 		textpos = label.get_rect()
 		textpos.centery = self._screen.screen.get_rect().centery
 		self._screen.screen.blit(label, textpos)
@@ -67,25 +67,25 @@ class CreateGame:
 
 	def drawRowNumbers(self):
 		font = pygame.font.Font(None, 30)
-		for i in range(MAX_BOARD_DIMS):
-			label = font.render(str(i+1), 1, (255,255,255))
+		for i in range(MAX_BOARD_DIMS-1):
+			label = font.render(str(i+2), 1, (255,255,255))
 			if((i+1) < 10):
 				self._screen.screen.blit(label, (25+(i*50), 240))
 			else:
 				self._screen.screen.blit(label, (20+(i*50), 240))
 			the_circle = pygame.draw.circle(self._screen.screen, (0,0,255), (30+(i*50),270), 10)
-			self._therows[i+1] = the_circle
+			self._therows[i+2] = the_circle
 
 	def drawColumnNumbers(self):
 		font = pygame.font.Font(None, 30)
-		for i in range(MAX_BOARD_DIMS):
-			label = font.render(str(i+1), 1, (255,255,255))
+		for i in range(MAX_BOARD_DIMS-1):
+			label = font.render(str(i+2), 1, (255,255,255))
 			if((i+1) < 10):
 				self._screen.screen.blit(label, (25+(i*50), 340))
 			else:
 				self._screen.screen.blit(label, (20+(i*50), 340))
 			the_circle = pygame.draw.circle(self._screen.screen, (0,0,255), (30+(i*50),370), 10)
-			self._thecolumns[i+1] = the_circle
+			self._thecolumns[i+2] = the_circle
 
 	def drawCreateButton(self):
 		the_rect = pygame.Rect(dims[0] - 300, dims[1]-150, 200, 100)
@@ -112,17 +112,21 @@ class CreateGame:
 		for k,v in self._theplayers.items():
 			if self._theplayers[k].collidepoint(mousePos):
 				self._number_of_players = k
+
 		for k,v in self._therows.items():
 			if self._therows[k].collidepoint(mousePos):
 				self._rows = k
+
 		for k,v in self._thecolumns.items():
 			if self._thecolumns[k].collidepoint(mousePos):
 				self._columns = k
+
 		if self._create_button.collidepoint(mousePos):
 			if (self._number_of_players != 0 and self._rows !=0 and self._columns !=0):
 				print "Ready to go to GameMode!"
 			else:
 				print "Please choose from ALL the options"
+
 
 #####################################################
 
@@ -138,8 +142,9 @@ def processInput():
 pygame.init()
 global window
 window = CreateGame(False)
-window.draw()
+
 while True:
+	window.draw()
 	processInput()
 
 
