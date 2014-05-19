@@ -4,11 +4,12 @@
 @author: Shibani
 """
 
-import pygame
+import pygame 
+from Player import Player
 
 from collections import namedtuple
 Edge = namedtuple("Edge", ["name", "index", "claimed"])
-
+player_one = Player("Shibani", (255,0,0))
 pygame.init()
 
 
@@ -29,6 +30,7 @@ class GameBoard:
         self._boxes = []
         self._player_no = player_no #number of players
         self._players = [] #player list
+        self._currentPlayer = player_one
         self._boxmake = []
         
         self._dotSize = 10
@@ -121,7 +123,7 @@ class GameBoard:
                 return True
         return False
     
-    def update_boxes(self, index):
+    def update_boxes(self, index, turn):
         #for every box that has the index of this line in it's named tuple, update that Edge to True
         #print index
         for i in range(len(self._boxes)):
@@ -145,8 +147,8 @@ class GameBoard:
                 #print "BOXMAKE! " + str(i)
                 if self._boxes[i] not in self._boxmake:
                     self._boxmake.append(self._boxes[i])
-                    self._players[0].score_inc()
-                    print("Score:" + str(self._players[0].get_score()))
+                    self._players[turn].score_inc()
+                    print(self._players[turn]._name + "'s Score:" + str(self._players[turn].get_score()))
                     # print self._lines[i]
                     #print(self._boxmake)
 
@@ -154,9 +156,13 @@ class GameBoard:
 
 
     #return False for failed move, return True for success 
-    def make_move(self, mousePos):
-        index = self.choose_line(mousePos)
-        
+    def make_move(self, mousePos, turn):
+        index = self.choose_line(mousePos)  
+        if turn >= len(self._players):
+            turn = 0
+        self._currentPlayer = self._players[turn] 
+        print ("--------TURN-------- " + str(turn))
+        print ("Current Player: " + self._currentPlayer._name + "'s Turn " + str(turn))
         #check if None --> failed choice of click
         if index == None:
             return False
@@ -165,9 +171,19 @@ class GameBoard:
             return False
         else:
             self._validLines.remove(index)
-            self.update_boxes(index)
-            
+            if (turn  + 1) >= len(self._players):
+                turn = 0
+                self._currentPlayer = self._players[turn] 
+            else:
+                turn += 1
+                self._currentPlayer = self._players[turn] 
+            print ("Next Player: " + self._currentPlayer._name + "'s Turn" + str(turn))
+            if turn == 0:
+                self.update_boxes(index, 2)  
+            else:
+                self.update_boxes(index, turn - 1)  
             self.game_over()
+            return self._currentPlayer
             return True
     
     def game_over(self):
@@ -184,5 +200,14 @@ class GameBoard:
         return True
 
     def add_player(self, player):
-        if len(self._players) < self._player_no:
-            self._players.append(player)
+        # if len(self._players) < self._player_no:
+        self._players.append(player)
+
+
+
+
+
+
+
+
+

@@ -8,6 +8,7 @@ import pygame
 
 from Viewport import Viewport
 from GameScreen import GameScreen
+import GameBoard
 from Board import Board
 from Player import Player
 
@@ -30,7 +31,8 @@ TODO: Import settings from a text file
 ######################################################################
 def gameInit():
     pygame.init()
-    
+    global TURN 
+    TURN = 0
     global GAMECLOCK
     GAMECLOCK = pygame.time.Clock()
     global FRAMERATE
@@ -47,15 +49,27 @@ def gameInit():
     global PROG_STATE
     PROG_STATE = 0
     
+    global SCREEN
+    SCREEN = GameScreen((600, 600), (0,0,0))
+    
     global VIEWPORT
     VIEWPORT = Viewport(60,60)
     
     global g
-    g = Board(3,3,1)
+    g = GameBoard.GameBoard(3, 3, SCREEN, 3)
+    #g = Board(3,3,1)
 
     global player_one
-    player_one = Player("CSS", (255,0,0))
+    player_one = Player("Shibani", (255,0,0))
     g.add_player(player_one)
+
+    global player_two
+    player_two = Player("Sufana", (0,255,0))
+    g.add_player(player_two)
+
+    global player_three
+    player_three = Player("Chris", (0,0,255))
+    g.add_player(player_three)
     
     g.setup_board()
     
@@ -67,8 +81,8 @@ def drawGame():
     """
     Draw screen, then dots, then lines, then boxes
     """
-    SCREEN.draw(player_one.get_score(), g.game_over()) ##HERE
-    g.draw(SCREEN.screen)
+    SCREEN.draw(g.game_over(), g._players, g._currentPlayer) ##HERE
+    g.draw()
     pygame.display.update()
     #g.run()
     
@@ -79,10 +93,14 @@ def processInput():
             exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if PROG_STATE == 1:
-                
                 return
             else:
-                g.make_move(event.pos)
+                global TURN
+                if (g.make_move(event.pos, TURN)):
+                    if (TURN  + 1) >= len(g._players):
+                        TURN = 0
+                    else:
+                        TURN += 1
     return
 
 ######################################################################

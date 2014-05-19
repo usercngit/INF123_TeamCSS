@@ -1,0 +1,28 @@
+<mockup version="1.0" skin="wireframe" fontFace="Balsamiq Sans" measuredW="982" measuredH="483" mockupW="903" mockupH="393">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="79" y="128" w="664" h="355" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="392" y="90" w="-1" h="-1" measuredW="39" measuredH="21" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Game%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::VRule" x="406" y="128" w="-1" h="355" measuredW="10" measuredH="100" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Paragraph" x="431" y="143" w="297" h="100" measuredW="200" measuredH="80" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Players%0A%09Player%20A%09%090pts%09%0A%09Player%20B%09%090pts%0A%09Player%20C%20***%09%090pts</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Button" x="195" y="280" w="-1" h="-1" measuredW="91" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>Start-Game%26bm%3BStart-Game.bmml%26bm%3BStart-Game.bmml%26bm%3BStart-Game.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22116%2C190%2C207%2C214%22%20href%3D%22Start-Game.bmml%22%20alt%3D%22Start-Game%22%20id%3D%2210%22/%3E</map>
+        <text>Start%20Game</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::StickyNote" x="783" y="132" w="199" h="141" measuredW="109" measuredH="123" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Only%20the%20player%20that%20started%20the%20game%20will%20have%20the%20%22Start%20Game%22%20button%0A%20%0ANothing%20will%20display%20if%20the%20game%20has%20not%20started%20for%20the%20other%20players%20waiting</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

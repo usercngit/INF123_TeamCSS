@@ -1,0 +1,45 @@
+<mockup version="1.0" skin="wireframe" fontFace="Balsamiq Sans" measuredW="713" measuredH="547" mockupW="634" mockupH="455">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="79" y="128" w="307" h="419" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="202" y="92" w="-1" h="-1" measuredW="35" measuredH="21" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Lobby</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::StickyNote" x="452" y="128" w="261" h="158" measuredW="109" measuredH="123" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hide%20if%20game%20has%20been%20started%0A%20%0AHide%20if%20game%20has%20reached%20required%20number%20of%20players</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="249" y="508" w="-1" h="-1" measuredW="130" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>CreateGameOnline%26bm%3BCreateGameOnline.bmml%26bm%3BCreateGameOnline.bmml%26bm%3BCreateGameOnline.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22170%2C416%2C300%2C440%22%20href%3D%22CreateGameOnline.bmml%22%20alt%3D%22CreateGameOnline%22%20id%3D%229%22/%3E</map>
+        <text>Create%20New%20Game</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="__group__" x="115" y="209" w="234" h="162" measuredW="234" measuredH="162" zOrder="3" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::List" x="0" y="36" w="234" h="126" measuredW="100" measuredH="126" zOrder="0" locked="false" isInGroup="10">
+          <controlProperties>
+            <hasHeader>true</hasHeader>
+            <hrefs>Game%26bm%3BGame.bmml%26bm%3BGame.bmml%26bm%3BGame.bmml%2CGame%26bm%3BGame.bmml%26bm%3BGame.bmml%26bm%3BGame.bmml%2CGame%26bm%3BGame.bmml%26bm%3BGame.bmml%26bm%3BGame.bmml%2CGame%26bm%3BGame.bmml%26bm%3BGame.bmml%26bm%3BGame.bmml%2CGame%26bm%3BGame.bmml%26bm%3BGame.bmml%26bm%3BGame.bmml%2CGame%26bm%3BGame.bmml%26bm%3BGame.bmml%26bm%3BGame.bmml</hrefs>
+            <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2236%2C153%2C270%2C174%22%20href%3D%22Game.bmml%22%20alt%3D%22Game%22%20id%3D%220%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%2236%2C174%2C270%2C195%22%20href%3D%22Game.bmml%22%20alt%3D%22Game%22%20id%3D%220%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%2236%2C195%2C270%2C216%22%20href%3D%22Game.bmml%22%20alt%3D%22Game%22%20id%3D%220%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%2236%2C216%2C270%2C237%22%20href%3D%22Game.bmml%22%20alt%3D%22Game%22%20id%3D%220%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%2236%2C237%2C270%2C258%22%20href%3D%22Game.bmml%22%20alt%3D%22Game%22%20id%3D%220%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%2236%2C258%2C270%2C279%22%20href%3D%22Game.bmml%22%20alt%3D%22Game%22%20id%3D%220%22/%3E%0A</map>
+            <text>Game%20List%0AGame%201%0AGame%202%0AGame%203%0AGame%204%0AGame%205</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="87" measuredH="21" zOrder="1" locked="false" isInGroup="10">
+          <controlProperties>
+            <text>Select%20a%20game</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="115" y="158" w="-1" h="-1" measuredW="62" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Username</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::TextInput" x="202" y="157" w="162" h="-1" measuredW="79" measuredH="23" zOrder="6" locked="false" isInGroup="-1"/>
+  </controls>
+</mockup>
