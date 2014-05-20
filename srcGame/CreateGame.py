@@ -168,8 +168,6 @@ thread = Thread(target=periodic_poll)
 thread.daemon = True  # die when the main thread dies 
 thread.start()
 
-<<<<<<< HEAD
-=======
 pygame.init()
 global window
 window = CreateGame(True)
@@ -178,5 +176,4 @@ window.do_send({'join': myname})
 while True:
 	window.draw()
 	processInput()
->>>>>>> b3dac59e0d881179f4650cd13b561f7c4c111be5
 
