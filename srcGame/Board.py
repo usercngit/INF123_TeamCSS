@@ -7,29 +7,33 @@ from GObject import GObject, Box
 from Player import Player
 
 class Board:
-    def __init__(self, rows = 2, columns = 2, player_no=2, viewheight, viewwidth):
+    def __init__(self, viewwidth, viewheight, rows = 2, columns = 2, player_no=2):
         self._started = False
         self._ended = False
         
         self._rows = max(rows, 2)
         self._columns = max(columns, 2)
+        self._width = viewwidth
+        self._height = viewheight
         
-        startpos = (viewwidth - viewwidth/2, viewheight - viewheight/2)
+        self._playerControl = PlayerControl(viewwidth, viewheight, player_no)
+        
+        #TODO: other buttons
+        startpos = viewwidth/4, viewheight/4
         startshape = (viewwidth/2, viewheight/2)
         startcolor = (150, 150, 200)
         startButton = GObject(startpos, startshape, startcolor)
         
+        backgrounds = []
         dots = []
         lines = []
         boxes = []
-        self._objects = {'dots':dots, 'lines':lines, 'boxes':boxes, 'start':startButton}
+        start = []
+        start.append(startButton)
+        self._objects = {'backgrounds':backgrounds, 'dots':dots, 'lines':lines, 'boxes':boxes, 'start':start}
         
         self._validLines = []
         self._filledBoxes = []
-        
-        self._currentPlayer = None
-        self._player_no = player_no #number of players
-        self._players = [] #player list
         
         self._dotSize = 10
         
@@ -46,14 +50,25 @@ class Board:
         self._linetallshape = (lineWidth, lineLength)
         
         self._boxcolor = (0, 255, 0)
-        self._boxshape = (100-(self._dotSize-1), 100-(self._dotSize-1))
+        self._boxshape = (lineLength, lineLength)
 
 ######################## SETUP ##########################
     def setup_board(self):
+        self._started = True
+        self._objects.pop('start')
+        
+        self.create_playerSection()
+        self.create_boardSection()
+        
+    def create_playerSection(self):
+        
+    def create_boardSection(self):
         self.create_dots()
         self.create_lines()
         self.create_boxes()
         self.define_boxes()
+        
+        
         
     def create_dots(self):
         for x in range(self._columns):
@@ -108,29 +123,44 @@ class Board:
                 
 ####################### DRAWING #########################
     def draw(self, view):
-        for name in self._objects.keys():
-            for obj in self._objects[name]:
-                obj.draw(view)
+        self.drawOjb('backgrounds', view)
+        
+        if not self._started:
+            self.drawObj('start', view)
+        else:
+            self.drawObj('boxes', view)
+            self.drawObj('lines', view)
+            self.drawObj('dots', view)
+    
+    def drawObj(self, name, view):
+        for obj in self._objects[name]:
+            obj.draw(view)
 
 ################# GAME LOGIC ###################
     def update(self, mousePos):
+        #check if the game exit button is clicked first
+        #TODO: implement
+        
+        #if game isn't started yet, wait for players
         if not self._started:
-            if len(self._players == self._player_no):
-                self._started = True
+            if len(self._players) == self._player_no:
                 self.setup_board()
-            elif self._objects['start'].collide(mousePos) and (len(self._players) >= 2):
-                self._started = True
+                
+            elif self._objects['start'][0].collide(mousePos) and (len(self._players) >= 2):
                 self.setup_board()
-                self._objects.pop('start')
+                
+            return False
+        #if game is started, run the logic
         else:
             index = self.choose_line(mousePos)
-        
                 #check if None --> failed choice of click
             if index == None:
                 return False
-        #if not valid move, line was already chosen
+                #if not valid move, line was already chosen
             elif not self.isValid_move(index):
+                self._currentPlayer = self._currentPlayer + 1 % self._player_no
                 return False
+            
             else:
                 self._objects['lines'][index].linewidth = 0
                 self._validLines.remove(index)
@@ -167,7 +197,7 @@ class Board:
         if len(self._validLines) == 0:
             self._ended = True
         return self._ended
-
+    
     def remove_player(self, player):
         if player in self._players:
             self._players.remove(player)
@@ -179,4 +209,20 @@ class Board:
         if not self._started:
             if len(self._players) < self._player_no:
                 self._players.append(player)
+
+class PlayerControl:
+    def __init__(self, width, height, player_no):
+        self._currentPlayer = 0
+        self._player_no = max(player_no, 2) #number of players
+        self._players = [] #player list
+        
+    def add_player(self, player):
+        if len(self._players) < self._player_no:
+            self._players.append(player)
             
+    def remove_player(self, player):
+        if player in self._players:
+            self._players.remove(player)
+            
+    def is_empty(self):
+        return self._player_no == len(self._players)

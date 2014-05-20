@@ -15,9 +15,35 @@ Viewport
 import pygame.display
 from math import floor
 
+class FixedViewport:
+    
+    def __init__(self, width, height):        
+        self.height = height
+        self.width = width
+        
+        resolution = int(self.width), int(self.height)
+        
+        self.window = pygame.display.set_mode(resolution)
+        
+    def renderFullScreen(self, model):
+        model.draw(self.window)
+        pygame.display.flip()
+        
+    def renderPartScreen(self, model1, model2, percent1=50):
+        percent1 = float(min( max(percent1, 30.0)/100.0, 1.0))
+        percent2 = float(1.0 - percent1)
+        
+        surface1 = 0, 0, floor(self.width * percent1), self.height
+        surface2 = surface1[2], 0, floor(self.width * percent2), self.height
+
+        model1.draw(self.window.subsurface(surface1))
+        model2.draw(self.window.subsurface(surface2))
+        
+        pygame.display.update()
+    
 class Viewport:
     
-    def __init__(self, heightRatio=70, widthRatio=50):
+    def __init__(self, heightRatio=50, widthRatio=50):
         info = pygame.display.Info()
         self.nativeH = info.current_h
         self.nativeW = info.current_w
@@ -34,10 +60,9 @@ class Viewport:
         
     def renderFullScreen(self, model):
         model.draw(self.window)
+        pygame.display.flip()
         
-        pygame.display.update()
-        
-    def renderPartScreen(self, model1, percent1=50, model2):
+    def renderPartScreen(self, model1, model2, percent1=50):
         percent1 = float(min( max(percent1, 30.0)/100.0, 1.0))
         percent2 = float(1.0 - percent1)
         
