@@ -61,8 +61,8 @@ class Viewport:
     def renderFullScreen(self, model):
         model.draw(self.window)
         pygame.display.flip()
-        
-    def renderPartScreen(self, model1, model2, percent1=50):
+
+    def renderPartScreen(self, model1, model2,percent1=50):
         percent1 = float(min( max(percent1, 30.0)/100.0, 1.0))
         percent2 = float(1.0 - percent1)
         

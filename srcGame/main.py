@@ -8,7 +8,6 @@ import pygame
 
 from Viewport import Viewport
 from GameScreen import GameScreen
-import GameBoard
 from Board import Board
 from Player import Player
 
@@ -49,42 +48,37 @@ def gameInit():
     global PROG_STATE
     PROG_STATE = 0
     
-    global SCREEN
-    SCREEN = GameScreen((600, 600), (0,0,0))
-    
     global VIEWPORT
-    VIEWPORT = Viewport(60,60)
+    VIEWPORT = Viewport(70,70)
     
-    global g
-    g = GameBoard.GameBoard(3, 3, SCREEN, 3)
-    #g = Board(3,3,1)
+    global GAMEBOARD
+    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 3, 3, 4)
 
-    global player_one
     player_one = Player("Shibani", (255,0,0))
-    g.add_player(player_one)
+    GAMEBOARD.add_player(player_one)
 
-    global player_two
     player_two = Player("Sufana", (0,255,0))
-    g.add_player(player_two)
+    GAMEBOARD.add_player(player_two)
 
-    global player_three
     player_three = Player("Chris", (0,0,255))
-    g.add_player(player_three)
-    
-    g.setup_board()
+    GAMEBOARD.add_player(player_three)
     
     global GAME_STATE
     GAME_STATE = 1;
+    
+#    global GAMESCREEN
+#    GAMESCREEN = GameScreen(VIEWPORT.window)
+    #global SIDEBAR
+    #SIDEBAR = Sidebar(GAMEBOARD)
         
 ######################################################################
 def drawGame():
     """
     Draw screen, then dots, then lines, then boxes
     """
-    SCREEN.draw(g.game_over(), g._players, g._currentPlayer) ##HERE
-    g.draw()
-    pygame.display.update()
-    #g.run()
+    #VIEWPORT.renderPartScreen(GAMEBOARD, SIDEBAR, 60)
+    VIEWPORT.renderFullScreen(GAMEBOARD)
+#    GAMESCREEN.draw(GAMEBOARD.game_over(), GAMEBOARD._players, GAMEBOARD._players[GAMEBOARD._currentPlayer])
     
 ######################################################################
 def processInput():
@@ -95,12 +89,7 @@ def processInput():
             if PROG_STATE == 1:
                 return
             else:
-                global TURN
-                if (g.make_move(event.pos, TURN)):
-                    if (TURN  + 1) >= len(g._players):
-                        TURN = 0
-                    else:
-                        TURN += 1
+                GAMEBOARD.update(event.pos)
     return
 
 ######################################################################
