@@ -33,11 +33,11 @@ class Viewport:
         self.window = pygame.display.set_mode(resolution)
         
     def renderFullScreen(self, model):
-        model.draw(self.window)
-        
+        # model.draw(self.window)
+        model.draw()
         pygame.display.update()
         
-    def renderPartScreen(self, model1, percent1=50, model2):
+    def renderPartScreen(self, model1, model2,percent1=50):
         percent1 = float(min( max(percent1, 30.0)/100.0, 1.0))
         percent2 = float(1.0 - percent1)
         

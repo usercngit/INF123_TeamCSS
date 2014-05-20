@@ -35,6 +35,6 @@ pygame.init()
 while True:
     processInput()
 #    VIEWPORT.renderFullScreen(GAMEBOARD)
-    VIEWPORT.renderPartScreen(GAMEBOARD, 50, GAMEBOARD2)
+    VIEWPORT.renderPartScreen(GAMEBOARD,GAMEBOARD2,50)
     GAMECLOCK.tick(50)
         
