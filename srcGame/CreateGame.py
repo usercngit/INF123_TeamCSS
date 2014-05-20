@@ -5,6 +5,12 @@
 """
 import pygame
 import GameScreen
+from network import Handler, poll
+from threading import Thread
+import os
+import sys
+from time import sleep
+
 
 MAX_PLAYERS = 5
 MAX_BOARD_DIMS = 15
@@ -12,11 +18,15 @@ MAX_BOARD_DIMS = 15
 dims = 800, 640
 RGB = 0,0,0 
 
-class CreateGame:
+myname = raw_input("What is your name? ")
+
+class CreateGame(Handler):
 
 	def __init__(self, online):
 		self._online = online #bool
 		if self._online:
+			Handler.__init__(self, 'localhost', 8888)
+			print "Server is connected."
 			self._game_type = " Online"
 		else:
 			self._game_type = " Offline" 
@@ -28,6 +38,14 @@ class CreateGame:
 		self._therows = {}
 		self._thecolumns = {}
 		self._create_button = None
+
+	def on_close(self):
+		print "Server has been closed."
+		os._exit(0)
+
+	def on_msg(self, msg):
+		if 'join' in msg:
+			print '%s joined' % (msg['join'])
 
 	def drawTitle(self):
 		font = pygame.font.Font(None, 40)
@@ -137,17 +155,24 @@ def processInput():
     	elif event.type == pygame.MOUSEBUTTONDOWN:
     		window.update(event.pos)
 
-####################################################			
+####################################################	
+
+
+def periodic_poll():
+	while 1:
+		poll()
+		sleep(0.05) #seconds
+
+thread = Thread(target=periodic_poll)
+thread.daemon = True  # die when the main thread dies 
+thread.start()
 
 pygame.init()
 global window
-window = CreateGame(False)
+window = CreateGame(True)
+window.do_send({'join': myname})
 
 while True:
 	window.draw()
 	processInput()
-
-
-
-
 
