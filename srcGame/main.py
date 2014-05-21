@@ -6,8 +6,9 @@
 
 import pygame
 
-from Viewport import Viewport
+from Viewport import FixedViewport
 from GameScreen import GameScreen
+import GameBoard
 from Board import Board
 from Player import Player
 
@@ -48,37 +49,49 @@ def gameInit():
     global PROG_STATE
     PROG_STATE = 0
     
+    global SCREEN
+    SCREEN = GameScreen((600, 600), (0,0,0))
+    
     global VIEWPORT
-    VIEWPORT = Viewport(70,70)
+<<<<<<< HEAD
+    VIEWPORT = Viewport(60,60)
+    
+    global g
+    g = GameBoard.GameBoard(3, 3, SCREEN, 3)
+    #g = Board(3,3,1)
+=======
+    VIEWPORT = FixedViewport(900, 600)
     
     global GAMEBOARD
-    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 3, 3, 4)
+    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 3, 3, 3)
+>>>>>>> FETCH_HEAD
 
+    global player_one
     player_one = Player("Shibani", (255,0,0))
-    GAMEBOARD.add_player(player_one)
+    g.add_player(player_one)
 
+    global player_two
     player_two = Player("Sufana", (0,255,0))
-    GAMEBOARD.add_player(player_two)
+    g.add_player(player_two)
 
+    global player_three
     player_three = Player("Chris", (0,0,255))
-    GAMEBOARD.add_player(player_three)
+    g.add_player(player_three)
+    
+    g.setup_board()
     
     global GAME_STATE
     GAME_STATE = 1;
-    
-#    global GAMESCREEN
-#    GAMESCREEN = GameScreen(VIEWPORT.window)
-    #global SIDEBAR
-    #SIDEBAR = Sidebar(GAMEBOARD)
         
 ######################################################################
 def drawGame():
     """
     Draw screen, then dots, then lines, then boxes
     """
-    #VIEWPORT.renderPartScreen(GAMEBOARD, SIDEBAR, 60)
-    VIEWPORT.renderFullScreen(GAMEBOARD)
-#    GAMESCREEN.draw(GAMEBOARD.game_over(), GAMEBOARD._players, GAMEBOARD._players[GAMEBOARD._currentPlayer])
+    SCREEN.draw(g.game_over(), g._players, g._currentPlayer) ##HERE
+    g.draw()
+    pygame.display.update()
+    #g.run()
     
 ######################################################################
 def processInput():
@@ -89,7 +102,12 @@ def processInput():
             if PROG_STATE == 1:
                 return
             else:
-                GAMEBOARD.update(event.pos)
+                global TURN
+                if (g.make_move(event.pos, TURN)):
+                    if (TURN  + 1) >= len(g._players):
+                        TURN = 0
+                    else:
+                        TURN += 1
     return
 
 ######################################################################
