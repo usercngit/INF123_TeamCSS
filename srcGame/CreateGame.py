@@ -20,6 +20,8 @@ MAX_BOARD_DIMS = 15
 dims = 800, 640
 RGB = 0,0,0 
 
+myname = raw_input("What is your name? ")
+
 class CreateGame(Handler):
 
 	def __init__(self, online):
