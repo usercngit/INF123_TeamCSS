@@ -204,15 +204,18 @@ class Board:
         return self._ended
     
     def remove_player(self, player):
+        if self.current_player() == player:
+            self._playerControl.next()
         self._playerControl.remove_player(player)
         return self._playerControl.is_empty()
         
-    def add_player(self, player):
+    def add_player(self, player): #tries to add player. returns false if fail: true if success
         #allow adding players
         if not self._started:
-            self._playerControl.add_player(player)
+            return self._playerControl.add_player(player)
+        return False
             
-    def current_player(self):
+    def current_player(self): #returns the player
         return self._playerControl.current()
 
 class PlayerControl:
@@ -230,6 +233,8 @@ class PlayerControl:
     def add_player(self, player):
         if len(self._players) < self._player_no:
             self._players.append(player)
+            return True
+        return False
             
     def remove_player(self, player):
         if player in self._players:
