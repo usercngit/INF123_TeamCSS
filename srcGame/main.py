@@ -52,7 +52,7 @@ def gameInit():
     VIEWPORT = FixedViewport(900, 600)
     
     global GAMEBOARD
-    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 3, 3, 3)
+    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 6, 6, 5)
 
     player_one = Player("Shibani", (255,0,0))
     GAMEBOARD.add_player(player_one)

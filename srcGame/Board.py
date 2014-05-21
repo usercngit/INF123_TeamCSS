@@ -236,7 +236,7 @@ class PlayerControl:
             self._players.remove(player)
             
     def next(self):
-        self._currentPlayer = (self._currentPlayer + 1) % (self._player_no-1)
+        self._currentPlayer = (self._currentPlayer + 1) % (len(self._players)-1)
         return self.current()
             
     def is_full(self):
