@@ -6,7 +6,7 @@
 
 import pygame
 
-from Viewport import Viewport
+from Viewport import FixedViewport
 from GameScreen import GameScreen
 import GameBoard
 from Board import Board
@@ -53,11 +53,18 @@ def gameInit():
     SCREEN = GameScreen((600, 600), (0,0,0))
     
     global VIEWPORT
+<<<<<<< HEAD
     VIEWPORT = Viewport(60,60)
     
     global g
     g = GameBoard.GameBoard(3, 3, SCREEN, 3)
     #g = Board(3,3,1)
+=======
+    VIEWPORT = FixedViewport(900, 600)
+    
+    global GAMEBOARD
+    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 3, 3, 3)
+>>>>>>> FETCH_HEAD
 
     global player_one
     player_one = Player("Shibani", (255,0,0))

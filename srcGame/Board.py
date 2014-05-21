@@ -14,8 +14,16 @@ class Board:
         self._rows = max(rows, 2)
         self._columns = max(columns, 2)
         
+<<<<<<< HEAD
         startpos = (viewwidth - viewwidth/2, viewheight - viewheight/2)
         startshape = (viewwidth/2, viewheight/2)
+=======
+        self._playerControl = PlayerControl((self._width, 0), player_no)
+        
+        #TODO: other buttons
+        startpos = self._width/4, self._height/4
+        startshape = (self._width/2, self._height/4)
+>>>>>>> FETCH_HEAD
         startcolor = (150, 150, 200)
         startButton = GObject(startpos, startshape, startcolor)
         
@@ -121,23 +129,37 @@ class Board:
             elif self._objects['start'].collide(mousePos) and (len(self._players) >= 2):
                 self._started = True
                 self.setup_board()
+<<<<<<< HEAD
                 self._objects.pop('start')
+=======
+                
+            return
+        #if game is started, run the logic
+>>>>>>> FETCH_HEAD
         else:
             index = self.choose_line(mousePos)
         
                 #check if None --> failed choice of click
             if index == None:
+<<<<<<< HEAD
                 return False
         #if not valid move, line was already chosen
             elif not self.isValid_move(index):
                 return False
+=======
+                return
+                #if not valid move, line was already chosen
+            elif not self.isValid_move(index):
+                return
+            
+>>>>>>> FETCH_HEAD
             else:
                 self._objects['lines'][index].linewidth = 0
                 self._validLines.remove(index)
                 self.update_boxes(index)
             
                 self.game_over()
-                return True
+                return
         
     def choose_line(self, mousePos):
         for i, line in enumerate(self._objects['lines']):
@@ -168,11 +190,56 @@ class Board:
             self._ended = True
         return self._ended
 
+<<<<<<< HEAD
     def remove_player(self, player):
         if player in self._players:
             self._players.remove(player)
             if len(self._players) == 0:
                 self._ended = True
+=======
+class PlayerControl:
+    def __init__(self, pos, player_no):
+        
+        self.pos = pos
+        
+        self._currentPlayer = 0
+        self._player_no = max(player_no, 2) #number of players
+        self._players = [] #player list
+        
+    def current(self):
+        return self._players[self._currentPlayer]
+     
+    def add_player(self, player):
+        if len(self._players) < self._player_no:
+            self._players.append(player)
+            
+    def remove_player(self, player):
+        if player in self._players:
+            self._players.remove(player)
+            
+    def next(self):
+        self._currentPlayer = (self._currentPlayer + 1) % (self._player_no-1)
+        return self.current()
+            
+    def is_full(self):
+        return len(self._players) == self._player_no
+    
+    def is_empty(self):
+        return len(self._players) == 0
+    
+    def display(self, view):
+        vertical_space = 0
+        for player in self._players:
+            text = player._name + ": " + str(player._score)
+            x,y = self.pos
+            y = vertical_space
+            obj = Text(text, (0,0,0), 40)
+            if player == self.current():
+                obj.draw(view, x, y)
+            else:
+                obj.draw(view, x, y)
+            vertical_space += 50
+>>>>>>> FETCH_HEAD
         
     def add_player(self, player):
         #allow adding players
