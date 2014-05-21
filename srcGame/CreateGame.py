@@ -20,7 +20,7 @@ MAX_BOARD_DIMS = 15
 dims = 800, 640
 RGB = 0,0,0 
 
-class CreateGame:
+class CreateGame(Handler):
 
 	def __init__(self, online):
 		self._online = online #bool
