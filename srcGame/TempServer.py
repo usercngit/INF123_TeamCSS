@@ -1,73 +1,82 @@
 from network import Listener, Handler, poll
 from random import randint
 from time import sleep
-from Viewport import FixedViewport
 from Board import Board
 from Player import Player
 
-global VIEWPORT
-VIEWPORT = FixedViewport(900, 600)
 
-global board
-board = Board(VIEWPORT.width, VIEWPORT.height, 6, 6, 5)
-
+event_queue = []
+clients= {}
 
 def broadcast(msg):
-    for h in handlers.keys():
-        h.do_send(msg)
+	for client in client.keys():
+		client.do_send(msg)
+		
+player_id = 0
+def generate_name():
+	global player_id
+	player_id += 1
+	return str(player_id)
 
-class TempServer:
+def generate_color():
+	R = randint(5,250)
+	G = randint(5,250)
+	B = randint(5,250)
+	return (R, G, B) 
 
-	def __init__(self):
-		pass
+class TempServer(Handler):
 
 	def on_open(self):
-		handlers[self] = None
-		print "connected to server"
+		event_queue.append(('join', self))
 
 	def on_close(self):
-		name = handlers[self]
-        del handlers[self]
-        print "disconnected from server"
+		event_queue.append(('quit', self))
 
-	def on_msg(self):
-		if 'join' in msg:
-			if board.add_player(handlers[self]):
-				board.add_player(handlers[self])
-				name = msg['join']
-				handlers[self] = name
-				broadcast({'join': name, 'users': handlers.values()})
-			else:
-				pass
-		elif 'quit' in msg:
-			del handlers[self]
-			broadcast({'leave': name})
-		elif event.type == pygame.MOUSEBUTTONDOWN:
-			board.update(event.pos)
+	def on_msg(self, msg):
+		event_queue.append((msg['input'], self))
 
+server = Listener(8888, TempServer)
 
+global board
+board = Board(900, 600, 6, 6, 5)
 
-'''
-on_open():
-	print "connected to server"
-
-on_close():
-	delete all players from handler list
-	print "disconnected from server"
-
-on_msg():
-	-if client joins:
-		-if >5: 
-			- fails -> ignore
-		-else: (add_player == True)
-			-add to game board & handler list 
-	-elif quit:
-		- delete player from handler list
-
-	-elif mousePos:
-		-check current_player == id:
-			- board.update(mousePos)
-			- send board to all clients (broadcast)
-'''
+while 1:
+	
+	# enqueue the player events received by the client handlers
+	poll()
+	
+	# apply events onto game state
+	for event, handler in event_queue: 
+		if event == 'quit':
+			#name = clients[handler]._name 
+			board.remove_player(clients[handler])
+			del clients[handler]
+			#broadcast(str(name) + " quit the game")
+		elif event == 'join':
+			#generate Name and Color
+			name = "Player #".__add__(generate_name())
+			color = generate_color()
+			newPlayer = Player(name, color)
+			clients[handler] = newPlayer
+			board.add_player(newPlayer)
+		else:  # input event
+			#handle start
+			if not board._started:
+				#make sure only to take input from the first player to join (player1)
+				if clients[handler] == board._playerControl._players[0]:
+					#handle input aka, let P1 start
+					board.update(event)
+			
+			elif clients[handler] == board.current_player():
+				#handle input if is the client's turn
+					board.update(event)
+			
+	event_queue = []
+	
+	for handler, player in clients.items():
+		msg = {'board': board}
+		handler.do_send(msg)
+		
+	sleep(1. / 20)  # seconds
 
 ##create a generate color and generate name for the players

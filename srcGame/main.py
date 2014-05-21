@@ -51,7 +51,7 @@ def gameInit():
     VIEWPORT = FixedViewport(900, 600)
     
     global GAMEBOARD
-    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 6, 2, 5)
+    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 4, 4, 5)
 
     player_one = Player("Chris", (255,0,0))
     GAMEBOARD.add_player(player_one)
@@ -62,11 +62,11 @@ def gameInit():
     player_three = Player("Joe", (0,0,255))
     GAMEBOARD.add_player(player_three)
     
-    player_four = Player("Sufana", (100,100,100))
-    GAMEBOARD.add_player(player_four)
+    #player_four = Player("Sufana", (100,100,100))
+    #GAMEBOARD.add_player(player_four)
     
-    player_five = Player("Shibani", (200,200,200))
-    GAMEBOARD.add_player(player_five)
+    #player_five = Player("Shibani", (200,200,200))
+    #GAMEBOARD.add_player(player_five)
     
     global GAME_STATE
     GAME_STATE = 1;
