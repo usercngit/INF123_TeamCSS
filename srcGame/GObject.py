@@ -27,10 +27,13 @@ class GObject:
 ########## TEXT #############
 class Text():
     def __init__(self, text, color, size):
-        font = pygame.font.Font(None, size)
-        self.label = font.render(text, 1, color)
+        self.text = text
+        self.color = color
+        self.size = size
         
     def draw(self, view, x, y):
+        font = pygame.font.Font(None, self.size)
+        self.label = font.render(self.text, 1, self.color)
         textpos = (x,y)
         view.blit(self.label, textpos)   
 
@@ -38,15 +41,18 @@ class Text():
 class Button(GObject):
     def __init__ (self, pos, shape, color, linewidth, text, textColor, textSize):
         GObject.__init__(self, pos, shape, color, linewidth)
-        
-        font = pygame.font.Font(None, textSize)
-        self.label = font.render(text, 1, textColor)
-        self.textpos = self.label.get_rect()
-        self.textpos.center = self.rect.center
+        self.text = text
+        self.textSize = textSize
+        self.textColor = textColor
         
     def draw(self, view):
+        font = pygame.font.Font(None, self.textSize)
+        label = font.render(self.text, 1, self.textColor)
+        textpos = label.get_rect()
+        textpos.center = self.rect.center
+        
         pygame.draw.rect(view, self.color, self.rect, self.linewidth)
-        view.blit(self.label, self.textpos)        
+        view.blit(label, textpos)        
         
 ########### BOX #############
 class Box(GObject):

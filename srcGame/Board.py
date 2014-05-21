@@ -114,8 +114,8 @@ class Board:
                 i = i +1
                 
     def create_boxes(self):
-        for y in range(self._columns-1):
-            for x in range(self._rows-1):
+        for y in range(self._rows-1):
+            for x in range(self._columns-1):
                 pos = (x*self._distBetweenDots + self._dotSize -1), (y*self._distBetweenDots + self._dotSize -1)
                 newBox = Box(pos, self._boxshape, self._boxcolor, 0, 0, 0, 0, 0)
             
@@ -241,7 +241,7 @@ class PlayerControl:
             self._players.remove(player)
             
     def next(self):
-        self._currentPlayer = (self._currentPlayer + 1) % (len(self._players)-1)
+        self._currentPlayer = (self._currentPlayer + 1) % len(self._players)
         return self.current()
             
     def is_full(self):
@@ -252,14 +252,17 @@ class PlayerControl:
     
     def display(self, view):
         vertical_space = 0
+        obj = Text("", (0,0,0), 40)
         for player in self._players:
             text = player._name + ": " + str(player._score)
+            obj.text = text
             x,y = self.pos
             y = vertical_space
-            obj = Text(text, (0,0,0), 40)
             if player == self.current():
+                obj.color = player._color
                 obj.draw(view, x, y)
             else:
+                obj.color = (0,0,0)
                 obj.draw(view, x, y)
             vertical_space += 50
         
