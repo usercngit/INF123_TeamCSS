@@ -10,6 +10,7 @@ from threading import Thread
 import os
 import sys
 from time import sleep
+import Board
 
 
 MAX_PLAYERS = 5
@@ -21,7 +22,7 @@ myname = raw_input("What is your name? ")
 
 class CreateGame(Handler):
 
-	def __init__(self, online, window, height, width):
+	def __init__(self, online):
 		self._online = online #bool
 		if self._online:
 			Handler.__init__(self, 'localhost', 8888)
@@ -30,9 +31,9 @@ class CreateGame(Handler):
 		else:
 			self._game_type = " Offline" 
 			
-		self._screen = window
-		self._height = height
-		self._width = width
+		self._screen = pygame.display.set_mode((800,640))
+		self._height = self._screen.get_height()
+		self._width = self._screen.get_width()
 		self._number_of_players = 0
 		self._rows = 0
 		self._columns = 0
@@ -108,15 +109,15 @@ class CreateGame(Handler):
 			self._thecolumns[i+2] = the_circle
 
 	def drawCreateButton(self):
-		the_rect = pygame.Rect(self._height - 300, self._width-150, 200, 100)
+		the_rect = pygame.Rect(800 - 300, 640-150, 200, 100)
 		self._create_button = pygame.draw.rect(self._screen, (0, 255, 0), the_rect, 0)
 		font = pygame.font.Font(None, 40)
 		label = font.render("Create Game", 1, (255,255,255))
-		self._screen.blit(label, (self._height-290, self._width -115))
+		self._screen.blit(label, (800-290, 640 -115))
 	
 	def draw(self):
+		self._screen.fill(0)
 		self.drawTitle()
-		self.drawPlayers()
 		self.drawPlayers()
 		self.drawRows()
 		self.drawColumns()
@@ -131,30 +132,43 @@ class CreateGame(Handler):
 		for k,v in self._theplayers.items():
 			if self._theplayers[k].collidepoint(mousePos):
 				self._number_of_players = k
+				self.draw()
 
 		for k,v in self._therows.items():
 			if self._therows[k].collidepoint(mousePos):
 				self._rows = k
+				self.draw()
 
 		for k,v in self._thecolumns.items():
 			if self._thecolumns[k].collidepoint(mousePos):
 				self._columns = k
+				self.draw()
 
 		if self._create_button.collidepoint(mousePos):
 			if (self._number_of_players != 0 and self._rows !=0 and self._columns !=0):
-				print "Ready to go to GameMode!"
+				# print "Ready to go to GameMode!"
+				global game
+				game = Board.Board(800, 640, self._rows, self._columns, self._number_of_players)
 			else:
 				print "Please choose from ALL the options"
 
 
 #####################################################
 
-# def processInput():
-#     for event in pygame.event.get():
-#     	if event.type == pygame.QUIT:
-#     	    exit()
-#     	elif event.type == pygame.MOUSEBUTTONDOWN:
-#     		self._screen.update(event.pos)
+def processInput():
+    for event in pygame.event.get():
+    	if event.type == pygame.QUIT:
+    	    exit()
+    	elif event.type == pygame.MOUSEBUTTONDOWN:
+    		window.update(event.pos)
+
+
+def processInput2():
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			exit()
+		elif event.type == pygame.MOUSEBUTTONDOWN:
+			game.update(event.pos)		
 
 ####################################################	
 
@@ -168,15 +182,20 @@ thread = Thread(target=periodic_poll)
 thread.daemon = True  # die when the main thread dies 
 thread.start()
 
-<<<<<<< HEAD
-=======
 pygame.init()
 global window
 window = CreateGame(True)
 window.do_send({'join': myname})
+window.draw()
+game = None
 
-while True:
-	window.draw()
+while game == None:
 	processInput()
->>>>>>> b3dac59e0d881179f4650cd13b561f7c4c111be5
+
+
+while game != None:
+	processInput2()
+	print "in the game loop"
+	game.draw(window._screen)
+
 
