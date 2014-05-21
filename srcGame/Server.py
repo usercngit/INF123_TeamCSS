@@ -1,6 +1,8 @@
-
-
-
+'''
+@author: Chris
+@author: Sufana
+@author: Shibani
+'''
 """
 Server master:
 The server is almighty. 
@@ -14,9 +16,7 @@ from random import randint
 from time import sleep
 
 
-     
 ################### network ##############
-
 handlers = {}
 
 def broadcast(msg):

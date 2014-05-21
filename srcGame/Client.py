@@ -1,5 +1,7 @@
 '''
 @author: Chris
+@author: Sufana
+@author: Shibani
 '''
 """
 The Client is slave: 
@@ -16,13 +18,20 @@ class Client(Handler):
             
     def on_msg(self, data):
         pass
-        
-client = Client('localhost', 8888)  # connect asynchronously
+
+"""
+0 = mainmenu
+1 = lobby
+2 = offline game
+3 = online game
+"""
+GAMESTATE = 0
+client = None
+#client = Client('localhost', 8888)  # connect asynchronously
 
 while 1:
     #if menu
-    
-    #if offline
+        
     
     #if joining lobby
     
