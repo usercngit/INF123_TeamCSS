@@ -7,7 +7,6 @@
 import pygame
 
 from Viewport import FixedViewport
-from GameScreen import GameScreen
 from Board import Board
 from Player import Player
 
