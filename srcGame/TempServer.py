@@ -9,7 +9,7 @@ event_queue = []
 clients= {}
 
 def broadcast(msg):
-	for client in client.keys():
+	for client in clients.keys():
 		client.do_send(msg)
 		
 player_id = 0
@@ -73,9 +73,9 @@ while 1:
 			
 	event_queue = []
 	
-	for handler, player in clients.items():
-		msg = {'board': board.to_list(), 'started':board._started, 'ended':board.game_over()}
-		handler.do_send(msg)
+	msg = {'board': board.to_list(), 'started':board._started, 'ended':board.game_over()}
+	broadcast(msg)
+		
 		
 	sleep(1. / 20)  # seconds
 

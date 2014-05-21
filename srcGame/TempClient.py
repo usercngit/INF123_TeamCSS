@@ -53,7 +53,7 @@ class Client(Handler):
 			bu.draw(view)
 			
 
-client = Client('localhost', 8888)  # connect asynchronously
+client = Client('169.234.82.35', 8888)  # connect asynchronously
 
 while 1:
 	
