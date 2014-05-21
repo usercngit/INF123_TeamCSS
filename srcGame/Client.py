@@ -11,16 +11,13 @@ Cons: lag between player input and screen display (one round-trip).
 But the client can smooth the lag by interpolating the position of the boxes. 
 """
 from network import Handler, poll
-from Viewport import Viewport
-
-
+    
 class Client(Handler):
             
     def on_msg(self, data):
         pass
         
-#client = Client('localhost', 8888)  # connect asynchronously
-
+client = Client('localhost', 8888)  # connect asynchronously
 
 while 1:
     #if menu
