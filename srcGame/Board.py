@@ -13,14 +13,15 @@ class Board:
         
         self._rows = max(rows, 2)
         self._columns = max(columns, 2)
+        self._viewwidth = viewwidth
         self._width = viewwidth - viewwidth/4
         self._height = viewheight
         
         self._playerControl = PlayerControl((self._width, 0), player_no)
         
         #TODO: other buttons
-        startpos = self._width/4, self._height/4
-        startshape = (self._width/2, self._height/4)
+        startpos = 0,0#self._width/4, self._height/4
+        startshape = self._width, self._height#(self._width/2, self._height/4)
         startcolor = (150, 150, 200)
         startButton = Button(startpos, startshape, startcolor, 0, "START", (0,0,0), 32)
         
@@ -59,6 +60,40 @@ class Board:
         self._boxcolor = (0, 255, 0)
         self._boxshape = (lineLength, lineLength)
         
+    def to_list(self):
+        players = []
+        backgrounds = []
+        dots = []
+        lines = []
+        boxes = []
+        buttons = []
+        
+        for player in self._playerControl._players:
+            p = player.to_list()
+            players.append(p)
+            
+        for back in self._objects['backgrounds']:
+            b = back.to_list()
+            backgrounds.append(b)
+            
+        for dot in self._objects['dots']:
+            d = dot.to_list()
+            dots.append(d)
+            
+        for line in self._objects['lines']:
+            l = line.to_list()
+            lines.append(l)
+                    
+        for box in self._objects['boxes']:
+            if box.filled:
+                b = box.to_list()
+                boxes.append(b)
+        
+        for button in self._objects['start']:
+            s = button.to_list()
+            buttons.append(s)
+            
+        return {'players':players, 'backgrounds':backgrounds, 'dots':dots, 'lines':lines, 'boxes':boxes, 'buttons':buttons}
         
 ####################### DRAWING #########################
     def draw(self, view):
@@ -74,12 +109,16 @@ class Board:
     
     def drawObj(self, name, view):
         for obj in self._objects[name]:
-            obj.draw(view)
+            if name == 'boxes':
+                if obj.filled:
+                    obj.draw(view)
+            else:
+                obj.draw(view)
 
 ######################## SETUP ##########################
     def setup_board(self):
         self._started = True
-        self._objects.pop('start')
+        self._objects['start'] = []
         
         self.create_dots()
         self.create_lines()
@@ -232,6 +271,10 @@ class PlayerControl:
      
     def add_player(self, player):
         if len(self._players) < self._player_no:
+            x,y = self.pos
+            player._rep.pos = (x, (50*len(self._players)))
+            if len(self._players) == 0:
+                player.set_color(player._color)
             self._players.append(player)
             return True
         return False
@@ -241,7 +284,9 @@ class PlayerControl:
             self._players.remove(player)
             
     def next(self):
+        self.current().set_color((0,0,0))
         self._currentPlayer = (self._currentPlayer + 1) % len(self._players)
+        self.current().set_color(self.current()._color)
         return self.current()
             
     def is_full(self):
@@ -251,18 +296,5 @@ class PlayerControl:
         return len(self._players) == 0
     
     def display(self, view):
-        vertical_space = 0
-        obj = Text("", (0,0,0), 40)
         for player in self._players:
-            text = player._name + ": " + str(player._score)
-            obj.text = text
-            x,y = self.pos
-            y = vertical_space
-            if player == self.current():
-                obj.color = player._color
-                obj.draw(view, x, y)
-            else:
-                obj.color = (0,0,0)
-                obj.draw(view, x, y)
-            vertical_space += 50
-        
+            player.draw(view)

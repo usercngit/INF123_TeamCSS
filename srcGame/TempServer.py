@@ -74,7 +74,7 @@ while 1:
 	event_queue = []
 	
 	for handler, player in clients.items():
-		msg = {'board': board}
+		msg = {'board': board.to_list(), 'started':board._started, 'ended':board.game_over()}
 		handler.do_send(msg)
 		
 	sleep(1. / 20)  # seconds

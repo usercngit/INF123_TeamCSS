@@ -3,20 +3,27 @@
 @author: Sofanah
 @author: Shibani
 '''
+from GObject import Text
 
 class Player:
 	
-	def __init__(self, name, color):
+	def __init__(self, name, color, score = 0):
 		self._name = name 
 		self._color = color
-		self._score = 0
+		self._score = score
+		string = name + ": " + str(score)
+		self._rep = Text((0,0), string, (0,0,0), 40)
+		
+	def to_list(self):
+		return self._rep.to_list()
 		
 	def score_inc(self):
 		self._score +=1
+		self._rep.text = self._name + ": " + str(self._score)
+		
+	def set_color(self, color):
+		self._rep.color = color
 	
-	def get_color(self):
-		return self._color
-
-	def get_score(self):
-		return self._score
+	def draw(self, view):
+		self._rep.draw(view)
 		

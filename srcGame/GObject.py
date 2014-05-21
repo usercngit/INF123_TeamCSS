@@ -16,7 +16,11 @@ class GObject:
         self.shape = shape
         self.color = color
         self.linewidth = linewidth
+        
         self.rect = pygame.Rect(self.pos, self.shape)
+        
+    def to_list(self):
+        return {'pos':self.pos, 'shape':self.shape, 'color':self.color, 'linewidth':self.linewidth}
     
     def collide(self, point):
         return self.rect.collidepoint(point)
@@ -26,16 +30,19 @@ class GObject:
         
 ########## TEXT #############
 class Text():
-    def __init__(self, text, color, size):
+    def __init__(self, pos, text, color, size):
+        self.pos = pos
         self.text = text
         self.color = color
         self.size = size
         
-    def draw(self, view, x, y):
+    def to_list(self):
+        return {'pos':self.pos, 'text':self.text, 'color':self.color, 'size':self.size}
+        
+    def draw(self, view):
         font = pygame.font.Font(None, self.size)
-        self.label = font.render(self.text, 1, self.color)
-        textpos = (x,y)
-        view.blit(self.label, textpos)   
+        label = font.render(self.text, 1, self.color)
+        view.blit(label, self.pos)
 
 ######### BUTTON ############
 class Button(GObject):
@@ -44,6 +51,9 @@ class Button(GObject):
         self.text = text
         self.textSize = textSize
         self.textColor = textColor
+        
+    def to_list(self):
+        return {'pos':self.pos, 'shape':self.shape, 'color':self.color, 'linewidth':self.linewidth, 'text':self.text, 'textColor':self.textColor, 'textSize':self.textSize}
         
     def draw(self, view):
         font = pygame.font.Font(None, self.textSize)
@@ -56,20 +66,22 @@ class Button(GObject):
         
 ########### BOX #############
 class Box(GObject):
-    def __init__ (self, pos, shape, color, linewidth, topIndex, bottomIndex, leftIndex, rightIndex):
+    def __init__ (self, pos, shape, color, linewidth, topIndex, bottomIndex, leftIndex, rightIndex, top = False, bottom = False, left = False, right = False, filled = False):
         GObject.__init__(self, pos, shape, color, linewidth)
         
         self.topindex = topIndex
-        self.top = False
+        self.top = top
         self.bottomindex = bottomIndex
-        self.bottom = False
+        self.bottom = bottom
         self.leftindex = leftIndex
-        self.left = False
+        self.left = left
         self.rightindex = rightIndex
-        self.right = False
+        self.right = right
         
-        self.filled = False
-        self.owner = None
+        self.filled = filled
+        
+    def to_list(self):
+        return {'pos':self.pos, 'shape':self.shape, 'color':self.color, 'linewidth':self.linewidth}
         
     def setIndexes(self, top, bottom, left, right):
         self.topindex = top
@@ -93,7 +105,3 @@ class Box(GObject):
         
             if(self.left) and (self.right) and (self.bottom) and (self.top):
                 self.filled = True
-                
-    def draw(self, view):
-        if self.filled:
-            pygame.draw.rect(view, self.color, self.rect, self.linewidth)
