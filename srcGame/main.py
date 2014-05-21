@@ -6,7 +6,7 @@
 
 import pygame
 
-from Viewport import Viewport
+from Viewport import FixedViewport
 from GameScreen import GameScreen
 from Board import Board
 from Player import Player
@@ -49,10 +49,10 @@ def gameInit():
     PROG_STATE = 0
     
     global VIEWPORT
-    VIEWPORT = Viewport(70,70)
+    VIEWPORT = FixedViewport(900, 600)
     
     global GAMEBOARD
-    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 3, 3, 4)
+    GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 3, 3, 3)
 
     player_one = Player("Shibani", (255,0,0))
     GAMEBOARD.add_player(player_one)
@@ -65,11 +65,6 @@ def gameInit():
     
     global GAME_STATE
     GAME_STATE = 1;
-    
-#    global GAMESCREEN
-#    GAMESCREEN = GameScreen(VIEWPORT.window)
-    #global SIDEBAR
-    #SIDEBAR = Sidebar(GAMEBOARD)
         
 ######################################################################
 def drawGame():

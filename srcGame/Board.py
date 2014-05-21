@@ -16,7 +16,7 @@ class Board:
         self._width = viewwidth - viewwidth/4
         self._height = viewheight
         
-        self._playerControl = PlayerControl((self._width, 0), (viewwidth-self._width, viewheight), player_no)
+        self._playerControl = PlayerControl((self._width, 0), player_no)
         
         #TODO: other buttons
         startpos = self._width/4, self._height/4
@@ -148,16 +148,16 @@ class Board:
             elif self._objects['start'][0].collide(mousePos) and (len(self._playerControl._players) >= 2):
                 self.setup_board()
                 
-            return False
+            return
         #if game is started, run the logic
         else:
             index = self.choose_line(mousePos)
                 #check if None --> failed choice of click
             if index == None:
-                return False
+                return
                 #if not valid move, line was already chosen
             elif not self.isValid_move(index):
-                return False
+                return
             
             else:
                 self._objects['lines'][index].linewidth = 0
@@ -167,7 +167,7 @@ class Board:
                     self._playerControl.next()
             
                 self.game_over()
-                return True
+                return
         
     def choose_line(self, mousePos):
         for i, line in enumerate(self._objects['lines']):
@@ -216,10 +216,9 @@ class Board:
         return self._playerControl.current()
 
 class PlayerControl:
-    def __init__(self, pos, dims, player_no):
+    def __init__(self, pos, player_no):
         
         self.pos = pos
-        self.dims = dims
         
         self._currentPlayer = 0
         self._player_no = max(player_no, 2) #number of players
@@ -238,7 +237,7 @@ class PlayerControl:
             
     def next(self):
         self._currentPlayer = (self._currentPlayer + 1) % (self._player_no-1)
-        return self._players[self._currentPlayer]
+        return self.current()
             
     def is_full(self):
         return len(self._players) == self._player_no
@@ -253,6 +252,9 @@ class PlayerControl:
             x,y = self.pos
             y = vertical_space
             obj = Text(text, (0,0,0), 40)
-            obj.draw(view, x, y)
+            if player == self.current():
+                obj.draw(view, x, y)
+            else:
+                obj.draw(view, x, y)
             vertical_space += 50
         
