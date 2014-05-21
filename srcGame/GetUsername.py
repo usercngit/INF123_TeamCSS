@@ -53,4 +53,4 @@ pygame.init()
 screen = pygame.display.set_mode((320,240))
 start = GetUsername(screen, 320, 240)
 
-# print (start.get_data())
+print (start.get_data())

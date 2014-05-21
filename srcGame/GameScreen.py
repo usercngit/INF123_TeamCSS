@@ -17,8 +17,10 @@ and will contain displays of game objects
 import pygame
 
 class GameScreen:
-    def __init__ (self, screen):
-        self.screen = screen
+    def __init__ (self, dims, RGB):
+        self.width, self.height = dims
+        self.RGB = RGB
+        self.screen = pygame.display.set_mode(dims)
         # self.drawScore(2)
         # self.draw(2, False)
 
@@ -57,6 +59,7 @@ class GameScreen:
             self.screen.blit(label, textpos)
 
     def draw(self, gameover, Players, currentPlayer):
+        self.screen.fill(self.RGB)
         self.drawScore(Players)
         self.drawGameOver(gameover)
         self.drawPlayerTurn(currentPlayer)
