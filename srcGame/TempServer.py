@@ -22,14 +22,16 @@ def generate_color():
 	R = randint(5,250)
 	G = randint(5,250)
 	B = randint(5,250)
-	return (R, G, B) 
+	return (R, G, B)
 
 class TempServer(Handler):
 
 	def on_open(self):
+		print "connection attempted"
 		event_queue.append(('join', self))
 
 	def on_close(self):
+		print "close"
 		event_queue.append(('quit', self))
 
 	def on_msg(self, msg):

@@ -1,7 +1,7 @@
 from network import Handler, poll
 import pygame
 from pygame.event import get as get_pygame_events
-from pygame.locals import KEYDOWN, QUIT, MOUSEBUTTONDOWN
+from pygame.locals import QUIT, MOUSEBUTTONDOWN
 from pygame.time import Clock
 
 pygame.init()
@@ -52,8 +52,7 @@ class Client(Handler):
 			bu = Button(button['pos'], button['shape'], button['color'], button['linewidth'], button['text'], button['textColor'], button['textSize'])
 			bu.draw(view)
 			
-
-client = Client('169.234.82.35', 8888)  # connect asynchronously
+client = Client('localhost', 8888)  # connect asynchronously
 
 while 1:
 	

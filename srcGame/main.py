@@ -53,13 +53,13 @@ def gameInit():
     global GAMEBOARD
     GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 4, 4, 5)
 
-    player_one = Player("Chris", (255,0,0))
+    player_one = Player("Katie", (255,0,0))
     GAMEBOARD.add_player(player_one)
 
-    player_two = Player("Alex", (0,255,0))
+    player_two = Player("Justin", (0,255,0))
     GAMEBOARD.add_player(player_two)
     
-    player_three = Player("Joe", (0,0,255))
+    player_three = Player("Chris", (0,0,255))
     GAMEBOARD.add_player(player_three)
     
     #player_four = Player("Sufana", (100,100,100))
