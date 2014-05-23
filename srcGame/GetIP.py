@@ -3,15 +3,15 @@
 """
 
 import pygame
-from pygame.locals import *
+from pygame.locals import KEYDOWN, K_BACKSPACE, K_RETURN
 import string
 
 class GetIP:
 
-	def __init__(self, window, height, width):
-		self._screen = window
+	def __init__(self, height, width):
 		self._height = height
 		self._width = width
+		self.IPtext = ""
 	
 	def get_key(self):
 		while True:
@@ -23,18 +23,17 @@ class GetIP:
 			else:
 				pass
 
-	def draw(self, IP):
+	def draw(self, view):
 		tfont = pygame.font.Font(None, 20)
-		pygame.draw.rect(self._screen, (0,0,0), ((self._width/2)-100, (self._height/2)-10, 200,20), 0)
-		pygame.draw.rect(self._screen, (255,255,255), ((self._width/2)-102, (self._height/2)-12, 204,24), 1)
-		if len(IP) != 0:
-			self._screen.blit(tfont.render(IP, 1, (255,0,0)), ((self._width/ 2) - 100, (self._height/ 2) - 10))
-
+		pygame.draw.rect(view, (0,0,0), ((self._width/2)-100, (self._height/2)-10, 200,20), 0)
+		pygame.draw.rect(view, (255,255,255), ((self._width/2)-102, (self._height/2)-12, 204,24), 1)
+		view.blit(tfont.render("IP address: "+ self.IPtext, 1, (255,0,0)), ((self._width/ 2) - 100, (self._height/ 2) - 10))
 		pygame.display.update()
 
-	def get_ip(self):
+	def get_ip(self,view):
 		IP = []
-		self.draw("IP: " + string.join(IP,""))
+		self.IPtext = ""
+		self.draw(view)
 		while True:
 			inputkey = self.get_key()
 			if inputkey == K_BACKSPACE:
@@ -44,8 +43,9 @@ class GetIP:
 			elif inputkey <=127:
 				IP.append(chr(inputkey))
 
-			self.draw("IP address: "+ string.join(IP,""))
-		return string.join(IP,"")
+			self.IPtext = (string.join(IP,""))
+			self.draw(view)
+		return self.IPtext
 
 
 # pygame.init()

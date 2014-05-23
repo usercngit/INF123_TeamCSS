@@ -1,4 +1,7 @@
+### network imports ###
 from network import Handler, poll
+
+### pygame imports ###
 import pygame
 from pygame.event import get as get_pygame_events
 from pygame.locals import QUIT, MOUSEBUTTONDOWN
@@ -6,11 +9,15 @@ from pygame.time import Clock
 
 pygame.init()
 
+### local imports ###
 from GObject import Button, GObject, Text
 from Viewport import FixedViewport
+from GetIP import GetIP
 
 VIEWPORT = FixedViewport(900, 600)
 FRAMERATE = 40
+
+IPwindow = GetIP(900, 600)
 
 view = VIEWPORT.window
 clock = Clock()
@@ -51,9 +58,10 @@ class Client(Handler):
 			#print button
 			bu = Button(button['pos'], button['shape'], button['color'], button['linewidth'], button['text'], button['textColor'], button['textSize'])
 			bu.draw(view)
-			
-client = Client('localhost', 8888)  # connect asynchronously
 
+thisip = IPwindow.get_ip(view)
+client = Client(thisip, 8888)  # connect asynchronously
+	
 while 1:
 	
 	poll()
