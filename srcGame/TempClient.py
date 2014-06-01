@@ -24,6 +24,13 @@ clock = Clock()
 
 class Client(Handler):
 	
+	def __init__(self, host, port):
+	    Handler.__init__(self, host, port)
+	    print 'client built'
+
+	def on_open(self):
+		print 'opened'
+
 	def on_msg(self, data):
 		global STARTED, ENDED
 		STARTED = data['started']
@@ -66,14 +73,13 @@ while 1:
 	
 	poll()
 	
-	if 1:
-		for event in get_pygame_events():  
-			if event.type == QUIT:
-				exit()
-			if event.type == MOUSEBUTTONDOWN:
-				msg = {'input': event.pos}
-				client.do_send(msg)
-				
+	for event in get_pygame_events():  
+		if event.type == QUIT:
+			exit()
+		if event.type == MOUSEBUTTONDOWN:
+			msg = {'input': event.pos}
+			client.do_send(msg)
+			
 	pygame.display.update()
 	clock.tick(FRAMERATE)	
 	

@@ -5,6 +5,7 @@
 """
 from GObject import GObject, Box, Button, Text
 from Player import Player
+import random
 
 class Board:
     def __init__(self, viewwidth, viewheight, rows = 2, columns = 2, player_no=2):
@@ -59,6 +60,15 @@ class Board:
         
         self._boxcolor = (0, 255, 0)
         self._boxshape = (lineLength, lineLength)
+
+        #added for representation //used in lobby
+        string = "Game# " + str(random.randint(1, 1000))
+        self._rep = Text((0,0), string, (0,0,0), 40)
+
+    #added for representation //used in lobby 
+    def set_color(self):
+        r = lambda: random.randint(0,255)
+        self._rep.color = '(%02X, %02X, %02X)' % (r(),r(),r()))
         
     def to_list(self):
         players = []
