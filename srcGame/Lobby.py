@@ -1,6 +1,4 @@
 from GObject import Button
-from random import randint
-from Board import Board
 number = 0
 
 class Lobby:
@@ -38,8 +36,7 @@ class Lobby:
 
 			self._buttons.append(gameButton)
 			return gameButton.text
-		return 
-    	
+		return ""
 
 	def remove_game(self, button_text):
 		for button in self._buttons:

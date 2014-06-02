@@ -60,39 +60,50 @@ class Board:
         
         self._boxcolor = (0, 255, 0)
         self._boxshape = (lineLength, lineLength)
+    
+    def getasdict(self, thing):
+        gameobjects = []
+        
+        if thing == 'players':
+            for player in self._playerControl._players:
+                p = player.to_list()
+                gameobjects.append(p)
+                
+        elif thing == 'backgrounds':
+            for back in self._objects['backgrounds']:
+                b = back.to_list()
+                gameobjects.append(b)
+                
+        elif thing == 'dots':
+            for dot in self._objects['dots']:
+                d = dot.to_list()
+                gameobjects.append(d)
+            
+        elif thing == 'lines':
+            for line in self._objects['lines']:
+                l = line.to_list()
+                gameobjects.append(l)
+                    
+        elif thing == 'boxes':
+            for box in self._objects['boxes']:
+                if box.filled:
+                    b = box.to_list()
+                    gameobjects.append(b)
+        
+        elif thing == 'buttons':
+            for button in self._objects['start']:
+                s = button.to_list()
+                gameobjects.append(s)
+                                
+        return gameobjects
         
     def to_list(self):
-        players = []
-        backgrounds = []
-        dots = []
-        lines = []
-        boxes = []
-        buttons = []
-        
-        for player in self._playerControl._players:
-            p = player.to_list()
-            players.append(p)
-            
-        for back in self._objects['backgrounds']:
-            b = back.to_list()
-            backgrounds.append(b)
-            
-        for dot in self._objects['dots']:
-            d = dot.to_list()
-            dots.append(d)
-            
-        for line in self._objects['lines']:
-            l = line.to_list()
-            lines.append(l)
-                    
-        for box in self._objects['boxes']:
-            if box.filled:
-                b = box.to_list()
-                boxes.append(b)
-        
-        for button in self._objects['start']:
-            s = button.to_list()
-            buttons.append(s)
+        players = self.getasdict('players')
+        backgrounds = self.getasdict('backgrounds')
+        dots = self.getasdict('dots')
+        lines = self.getasdict('lines')
+        boxes = self.getasdict('boxes')
+        buttons = self.getasdict('buttons')
             
         return {'players':players, 'backgrounds':backgrounds, 'dots':dots, 'lines':lines, 'boxes':boxes, 'buttons':buttons}
         
@@ -184,9 +195,11 @@ class Board:
         if not self._started:
             if self._playerControl.is_full():
                 self.setup_board()
+                return True
                 
             elif self._objects['start'][0].collide(mousePos) and (len(self._playerControl._players) >= 2):
                 self.setup_board()
+                return True
                 
             return False
         #if game is started, run the logic
