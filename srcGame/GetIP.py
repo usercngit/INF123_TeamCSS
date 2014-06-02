@@ -5,6 +5,7 @@ import time
 import pygame
 from pygame.locals import KEYDOWN, K_BACKSPACE, K_RETURN
 import string
+from pygame.time import Clock 
 
 class GetIP:
 
@@ -12,6 +13,7 @@ class GetIP:
 		self._height = height
 		self._width = width
 		self.IPtext = ""
+		self.clock = Clock()
 	
 	def get_key(self):
 		while True:
@@ -35,7 +37,6 @@ class GetIP:
 		self.IPtext = ""
 		self.draw(view)
 		while True:
-			time.sleep(0.2)
 			inputkey = self.get_key()
 			if inputkey == K_BACKSPACE:
 				IP = IP[0:-1]
@@ -46,6 +47,8 @@ class GetIP:
 
 			self.IPtext = (string.join(IP,""))
 			self.draw(view)
+			
+			self.clock.tick(40)
 		return self.IPtext
 
 

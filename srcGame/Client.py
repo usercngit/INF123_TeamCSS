@@ -23,6 +23,8 @@ IPwindow = GetIP(900, 600)
 view = VIEWPORT.window
 clock = Clock()
 
+global lobby
+global board
 global MODE
 MODE = ''
 
@@ -76,15 +78,13 @@ class Client(Handler):
 		print 'client built'
 
 	def on_open(self):
-		global board
-		global lobby
-		board = boardRep()
-		lobby = lobbyRep()
 		
 		print 'opened'
 
 	def on_msg(self, data):
 		global MODE
+		global board
+		global lobby
 		#init and update are split, as to help in the reduction in the amount the server should ever have to send
 		#init will be sent to the client whenever they initially join a lobby or game
 		if data['type'] == 'init':
@@ -109,7 +109,6 @@ class Client(Handler):
 				lobby = lobbyRep()
 				for dic in data['lobby']:
 					for item in data['lobby'][dic]:
-						print item
 						obj = Button(item['pos'], item['shape'], item['color'], item['linewidth'], item['text'], item['textColor'], item['textSize'])
 						lobby.add(obj)
 			
@@ -141,6 +140,7 @@ class Client(Handler):
 						lobby.replace(dic, templist)
 						
 thisip = IPwindow.get_ip(view)
+view.fill((0,0,0))
 client = Client(thisip, 8888)  # connect asynchronously
 	
 while 1:
@@ -149,8 +149,6 @@ while 1:
 	
 	for event in get_pygame_events():  
 		if event.type == QUIT:
-			msg = {'input': "quit"}
-			client.do_send(msg)
 			exit()
 		if event.type == MOUSEBUTTONDOWN:
 			msg = {'input': event.pos}
