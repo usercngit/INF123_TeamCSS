@@ -1,12 +1,12 @@
 from GObject import Button
 from random import randint
-global number
 from Board import Board
+number = 0
 
 class Lobby:
 
 	def __init__(self, width, height):
-		number = 0
+		self._buttons = []
 
 		self._width = width
 		self._height = height
@@ -15,35 +15,34 @@ class Lobby:
 		self._y = self._height/4
 
 		createpos = 0,0
-		createshape = self._width, self._height
+		createshape = self._width/6, self._height/6
 		createcolor = (150, 150, 200)
 		createGameButton = Button(createpos, createshape, createcolor, 0, "Create Game", (0,0,0), 32)
 
-		newGame = Board(900, 600, 6, 6, 5)
-
-		self._buttons = {createGameButton: newGame}
+		self._buttons.append(createGameButton)
 
 
-	def add_game(self, game):
+	def add_game(self):
 		if len(self._buttons) < 11:
+			global number
 			number += 1
 
-			gamepos = self._x
-			gameshape = self._y
+			gamepos = self._x, self._y
+			gameshape = self._width/6, self._height/6
 
-			self._y += 50
+			self._y += 100
 
 			gamecolor = (150, 150, 200)
         	gameButton = Button(gamepos, gameshape, gamecolor, 0, "Game# " + str(number), (0,0,0), 32) 
 
-        	self._buttons[gameButton] = game
-        	return True
-		return False
+        	self._buttons.append(gameButton)
+        	return gameButton.text
+		return 
 
-	def remove_game(self, game):
-		for key, value in self._buttons.items():
-			if value == game:
-				del self._buttons[key]
+	def remove_game(self, button_text):
+		for button in self._buttons:
+			if button.text == button_text:
+				self._buttons.remove(button)
 
 	def is_full(self):
 		return len(self._buttons) == 11 
@@ -51,18 +50,23 @@ class Lobby:
 	def is_empty(self):
 		return len(self._buttons) == 1
 
-	def draw(self, view):
-		for key in self._buttons.keys():
-			key.draw(view)
-
 	def to_list(self):
 		buttons = []
 
-		for button in self._buttons.keys():
+		for button in self._buttons:
 			s = button.to_list()
 			buttons.append(s)
 
 		return {'buttons': buttons}
+
+	def update(self, mousePos):
+		for button in self._buttons:
+			if button.collide(mousePos):
+				return button.text		#'Create Game' or 'Game# n'
+
+	def draw(self, view):
+		for button in self._buttons:
+			button.draw(view)
 
 	#create game button (send message and server will add that game to the list of games)
 	#game just as temp server

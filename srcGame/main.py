@@ -9,6 +9,7 @@ import pygame
 from Viewport import FixedViewport
 from Board import Board
 from Player import Player
+from Lobby import Lobby
 
 
 """
@@ -49,18 +50,26 @@ def gameInit():
     
     global VIEWPORT
     VIEWPORT = FixedViewport(900, 600)
+
+    global LOBBY 
+    LOBBY = Lobby(900,600)
+
     
     global GAMEBOARD
     GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 4, 4, 5)
 
-    player_one = Player("Katie", (255,0,0))
-    GAMEBOARD.add_player(player_one)
 
-    player_two = Player("Justin", (0,255,0))
-    GAMEBOARD.add_player(player_two)
+    value = LOBBY.add_game()
+    value2 = LOBBY.add_game()
+
+    # player_one = Player("Katie", (255,0,0))
+    # GAMEBOARD.add_player(player_one)
+
+    # player_two = Player("Justin", (0,255,0))
+    # GAMEBOARD.add_player(player_two)
     
-    player_three = Player("Chris", (0,0,255))
-    GAMEBOARD.add_player(player_three)
+    # player_three = Player("Chris", (0,0,255))
+    # GAMEBOARD.add_player(player_three)
     
     #player_four = Player("Sufana", (100,100,100))
     #GAMEBOARD.add_player(player_four)
@@ -77,7 +86,8 @@ def drawGame():
     Draw screen, then dots, then lines, then boxes
     """
     #VIEWPORT.renderPartScreen(GAMEBOARD, SIDEBAR, 60)
-    VIEWPORT.renderFullScreen(GAMEBOARD)
+    # VIEWPORT.renderFullScreen(GAMEBOARD)
+    VIEWPORT.renderFullScreen(LOBBY)
 #    GAMESCREEN.draw(GAMEBOARD.game_over(), GAMEBOARD._players, GAMEBOARD._players[GAMEBOARD._currentPlayer])
     
 ######################################################################
@@ -89,7 +99,7 @@ def processInput():
             if PROG_STATE == 1:
                 return
             else:
-                GAMEBOARD.update(event.pos)
+                LOBBY.update(event.pos)
     return
 
 ######################################################################
