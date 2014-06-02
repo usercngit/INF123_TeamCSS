@@ -3,6 +3,7 @@ from random import randint
 from time import sleep
 from Board import Board
 from Player import Player
+from Lobby import Lobby 
 
 
 event_queue = []
@@ -42,6 +43,9 @@ server = Listener(8888, TempServer)
 global board
 board = Board(900, 600, 6, 6, 5)
 
+global lobby 
+lobby = Lobby(900,600)
+
 while 1:
 	
 	# enqueue the player events received by the client handlers
@@ -63,6 +67,11 @@ while 1:
 			board.add_player(newPlayer)
 		else:  # input event
 			#handle start
+			if board._started:
+				pass
+				#remove board(game) from lobby
+
+				
 			if not board._started:
 				#make sure only to take input from the first player to join (player1)
 				if clients[handler] == board._playerControl._players[0]:
