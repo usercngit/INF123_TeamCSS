@@ -23,6 +23,9 @@ IPwindow = GetIP(900, 600)
 view = VIEWPORT.window
 clock = Clock()
 
+global MODE
+MODE = ''
+
 #*************** LIGHT MODEL *******************
 class boardRep:
 	def __init__(self):
@@ -46,7 +49,7 @@ class boardRep:
 		self.drawObj('buttons', view)
 	
 	def drawObj(self, name, view):
-		for obj in self._objects[name]:
+		for obj in self.objects[name]:
 			obj.draw(view)
 			
 class lobbyRep:
@@ -63,7 +66,7 @@ class lobbyRep:
 		self.drawObj('buttons', view)
 	
 	def drawObj(self, name, view):
-		for obj in self._objects[name]:
+		for obj in self.objects[name]:
 			obj.draw(view)
 
 class Client(Handler):
@@ -75,14 +78,18 @@ class Client(Handler):
 	def on_open(self):
 		global board
 		global lobby
+		board = boardRep()
+		lobby = lobbyRep()
 		
 		print 'opened'
 
 	def on_msg(self, data):
+		global MODE
 		#init and update are split, as to help in the reduction in the amount the server should ever have to send
 		#init will be sent to the client whenever they initially join a lobby or game
 		if data['type'] == 'init':
 			if 'board' in data:
+				MODE = 'game'
 				board = boardRep()
 				
 				for dic in data['board']:
@@ -98,28 +105,41 @@ class Client(Handler):
 							board.add(dic, obj)
 
 			elif 'lobby' in data:
+				MODE = 'lobby'
 				lobby = lobbyRep()
-				
 				for dic in data['lobby']:
 					for item in data['lobby'][dic]:
+						print item
 						obj = Button(item['pos'], item['shape'], item['color'], item['linewidth'], item['text'], item['textColor'], item['textSize'])
 						lobby.add(obj)
 			
 		elif data['type'] == 'update':
 			if 'board' in data:
 				for dic in data['board']:
+					templist = []
 					for item in data['board'][dic]:
 						if dic == 'buttons':
 							obj = Button(item['pos'], item['shape'], item['color'], item['linewidth'], item['text'], item['textColor'], item['textSize'])
+							templist.append(obj)
 						elif dic == 'players':
 							obj = Text(item['pos'], item['text'], item['color'], item['size'])
+							templist.append(obj)
 						else:
 							obj = GObject(item['pos'], item['shape'], item['color'], item['linewidth'])
+							templist.append(obj)
+						
+					if len(templist) > 0:
+						board.replace(dic, templist)
+						
 			elif 'lobby' in data:
 				for dic in data['lobby']:
+					templist = []
 					for item in data['lobby'][dic]:
 						obj = Button(item['pos'], item['shape'], item['color'], item['linewidth'], item['text'], item['textColor'], item['textSize'])
-
+						
+					if len(templist) > 0:
+						lobby.replace(dic, templist)
+						
 thisip = IPwindow.get_ip(view)
 client = Client(thisip, 8888)  # connect asynchronously
 	
@@ -138,6 +158,11 @@ while 1:
 		elif event.type == KEYDOWN:
 			msg = {'input': "escape"}
 			client.do_send(msg)
+			
+	if MODE == 'lobby':
+		lobby.draw(view)
+	elif MODE == 'game':
+		board.draw(view)
 			
 	pygame.display.update()
 	clock.tick(FRAMERATE)
