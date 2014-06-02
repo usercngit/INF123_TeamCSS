@@ -188,16 +188,16 @@ class Board:
             elif self._objects['start'][0].collide(mousePos) and (len(self._playerControl._players) >= 2):
                 self.setup_board()
                 
-            return
+            return False
         #if game is started, run the logic
         else:
             index = self.choose_line(mousePos)
                 #check if None --> failed choice of click
             if index == None:
-                return
+                return False
                 #if not valid move, line was already chosen
             elif not self.isValid_move(index):
-                return
+                return False
             
             else:
                 self._objects['lines'][index].linewidth = 0
@@ -207,7 +207,7 @@ class Board:
                     self._playerControl.next()
             
                 self.game_over()
-                return
+                return True
         
     def choose_line(self, mousePos):
         for i, line in enumerate(self._objects['lines']):
