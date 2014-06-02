@@ -72,7 +72,7 @@ def gameInit():
 
     LOBBY.remove_game(value1)
 
-    # value11 = LOBBY.add_game()
+    value11 = LOBBY.add_game()
     # value12 = LOBBY.add_game()
 
     # player_one = Player("Katie", (255,0,0))

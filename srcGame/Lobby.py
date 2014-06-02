@@ -47,10 +47,8 @@ class Lobby:
 				self._buttons.remove(button)
 
 		for button in self._buttons[1:]:
-			print 'previous position = ', button.pos
 			gamepos = self._x, 50*((self._buttons.index(button)))
-			button.pos = gamepos
-			print 'new position = ', button.pos
+			button.new_pos(gamepos)
 
 
 	def is_full(self):
@@ -77,6 +75,7 @@ class Lobby:
 	def draw(self, view):
 		for button in self._buttons:
 			button.draw(view)
+			# print button.pos
 
 	#create game button (send message and server will add that game to the list of games)
 	#game just as temp server

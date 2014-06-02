@@ -24,6 +24,11 @@ class GObject:
     
     def collide(self, point):
         return self.rect.collidepoint(point)
+
+    def new_pos(self, pos):
+        self.pos = pos
+        self.rect.left = pos[0]
+        self.rect.top = pos[1]
     
     def draw(self, view):
         pygame.draw.rect(view,self.color, self.rect, self.linewidth)
