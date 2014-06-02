@@ -1,7 +1,7 @@
 """
 @author: Sofanah
 """
-
+import time
 import pygame
 from pygame.locals import KEYDOWN, K_BACKSPACE, K_RETURN
 import string
@@ -18,8 +18,8 @@ class GetIP:
 			event = pygame.event.poll()
 			if event.type == KEYDOWN:
 				return event.key
-			# elif event.type == pygame.QUIT:
-			# 	exit()
+			elif event.type == pygame.QUIT:
+				exit()
 			else:
 				pass
 
@@ -35,6 +35,7 @@ class GetIP:
 		self.IPtext = ""
 		self.draw(view)
 		while True:
+			time.sleep(0.2)
 			inputkey = self.get_key()
 			if inputkey == K_BACKSPACE:
 				IP = IP[0:-1]
