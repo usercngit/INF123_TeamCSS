@@ -1,40 +1,62 @@
-from GObject import Text
-import Board
+from GObject import Button
+from random import randint
+global number
 
 class Lobby:
 
-	def __init__(self, pos, games_no):
-		self._pos = pos
-		self._game_chosen = None
-		self._game_no = min(len(games_no),10)
-		self._games = []
-		self._string = "Game# " + str(random.randint(1, 1000))
-        self._rep = Text((0,0), string, (0,0,0), 40)
+	def __init__(self, width, height):
+		number = 0
+
+		self._width = width
+		self._height = height
+
+		self._x = self._width/4
+		self._y = self._height/4
+
+		createpos = 0,0
+		createshape = self._width, self._height
+		createcolor = (150, 150, 200)
+		createGameButton = Button(createpos, createshape, createcolor, 0, "Create Game", (0,0,0), 32)
+
+		newGame = Board(900, 600, 6, 6, 5)
+
+		self._buttons = {createGameButton: newGame}
+
 
 	def add_game(self, game):
-		if len(self._games) < self._game_no:
-			x, y = self._pos
-			self._rep.pos = (x, (50*len(self._games)))
-			if self.is_empty():
-				self.set_color()
-			self._games.append(game)
+		if len(self._buttons) < 11:
+			number += 1
+
+			gamepos = self._x
+			gameshape = self._y
+
+			self._y += 50
+
+			gamecolor = (150, 150, 200)
+        	gameButton = Button(gamepos, gameshape, gamecolor, 0, "Game# " + str(number), (0,0,0), 32) 
+
+        	self._buttons[gameButton] = game
+
 			return True
 		return False
 
 	def remove_game(self, game):
-		if game in self._games:
-			self._games.remove(game)
+		if key, value in self._buttons.items():
+			if value == game:
+				del self._buttons[key]
 
 	def is_full(self):
-		return len(self._games) == self._game_no 
+		return len(self._buttons) == 11 
 
 	def is_empty(self):
-		return len(self._games) == 0
-	
-	def set_color(self):
-        r = lambda: random.randint(0,255)
-        self._rep.color = '(%02X, %02X, %02X)' % (r(),r(),r()))
+		return len(self._buttons) == 1
 
-	def display(self, view):
-		for game in self._games:
-			game.draw(view)
+	def draw(self, view):
+		for key in self._buttons.keys():
+			key.draw(view)
+
+	#create game button (send message and server will add that game to the list of games)
+	#game just as temp server
+	#send something that the client can draw(buttons) (just like player is set up with GObjects)
+	#gets click from player and if collides (button) --> get name of button 
+
