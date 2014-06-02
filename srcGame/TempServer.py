@@ -67,11 +67,11 @@ while 1:
 			board.add_player(newPlayer)
 		else:  # input event
 			#handle start
-			if board._started:
-				pass
-				#remove board(game) from lobby
+			# if board._started:
+			# 	pass
+			# 	#remove board(game) from lobby
 
-				
+
 			if not board._started:
 				#make sure only to take input from the first player to join (player1)
 				if clients[handler] == board._playerControl._players[0]:

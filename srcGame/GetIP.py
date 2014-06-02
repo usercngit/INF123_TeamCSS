@@ -5,7 +5,6 @@
 import pygame
 from pygame.locals import KEYDOWN, K_BACKSPACE, K_RETURN
 import string
-import network
 
 class GetIP:
 

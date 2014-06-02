@@ -1,6 +1,7 @@
 from GObject import Button
 from random import randint
 global number
+from Board import Board
 
 class Lobby:
 
@@ -36,12 +37,11 @@ class Lobby:
         	gameButton = Button(gamepos, gameshape, gamecolor, 0, "Game# " + str(number), (0,0,0), 32) 
 
         	self._buttons[gameButton] = game
-
-			return True
+        	return True
 		return False
 
 	def remove_game(self, game):
-		if key, value in self._buttons.items():
+		for key, value in self._buttons.items():
 			if value == game:
 				del self._buttons[key]
 
@@ -54,6 +54,15 @@ class Lobby:
 	def draw(self, view):
 		for key in self._buttons.keys():
 			key.draw(view)
+
+	def to_list(self):
+		buttons = []
+
+		for button in self._buttons.keys():
+			s = button.to_list()
+			buttons.append(s)
+
+		return {'buttons': buttons}
 
 	#create game button (send message and server will add that game to the list of games)
 	#game just as temp server
