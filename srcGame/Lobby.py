@@ -23,21 +23,19 @@ class Lobby:
 
 
 	def add_game(self):
+		print(len(self._buttons))
 		if len(self._buttons) < 11:
 			global number
 			number += 1
 
-			gamepos = self._x, 50*len(self._buttons)#self._y
+			gamepos = self._x, 50*len(self._buttons)
 			gameshape = self._width/6, self._height/9
-
-			# self._y += 50
 
 			gamecolor = (150, 150, 200)
         	gameButton = Button(gamepos, gameshape, gamecolor, 0, "Game# " + str(number), (0,0,0), 32) 
 
         	self._buttons.append(gameButton)
         	return gameButton.text
-		return 
 
 	def remove_game(self, button_text):
 		for button in self._buttons:
