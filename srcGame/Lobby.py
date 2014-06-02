@@ -27,7 +27,7 @@ class Lobby:
 			global number
 			number += 1
 
-			gamepos = self._x, 50*len(self._buttons)#self._y
+			# gamepos = self._x, 50*len(self._buttons)#self._y
 			gamepos = self._x, 50*len(self._buttons)
 			gameshape = self._width/6, self._height/9
 
@@ -45,6 +45,13 @@ class Lobby:
 		for button in self._buttons:
 			if button.text == button_text:
 				self._buttons.remove(button)
+
+		for button in self._buttons[1:]:
+			print 'previous position = ', button.pos
+			gamepos = self._x, 50*((self._buttons.index(button)))
+			button.pos = gamepos
+			print 'new position = ', button.pos
+
 
 	def is_full(self):
 		return len(self._buttons) == 11 
