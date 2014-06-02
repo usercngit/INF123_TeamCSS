@@ -59,8 +59,20 @@ def gameInit():
     GAMEBOARD = Board(VIEWPORT.width, VIEWPORT.height, 4, 4, 5)
 
 
-    value = LOBBY.add_game()
+    value1 = LOBBY.add_game()
     value2 = LOBBY.add_game()
+    value3 = LOBBY.add_game()
+    value4 = LOBBY.add_game()
+    value5 = LOBBY.add_game()
+    value6 = LOBBY.add_game()
+    value7 = LOBBY.add_game()
+    value8 = LOBBY.add_game()
+    value9 = LOBBY.add_game()
+    value10 = LOBBY.add_game()
+
+    LOBBY.remove_game(value1)
+
+    value11 = LOBBY.add_game()
 
     # player_one = Player("Katie", (255,0,0))
     # GAMEBOARD.add_player(player_one)

@@ -11,8 +11,8 @@ class Lobby:
 		self._width = width
 		self._height = height
 
-		self._x = self._width/4
-		self._y = self._height/4
+		self._x = self._width/6
+		self._y = self._height/6
 
 		createpos = 0,0
 		createshape = self._width/6, self._height/6
@@ -27,10 +27,10 @@ class Lobby:
 			global number
 			number += 1
 
-			gamepos = self._x, self._y
-			gameshape = self._width/6, self._height/6
+			gamepos = self._x, 50*len(self._buttons)#self._y
+			gameshape = self._width/6, self._height/9
 
-			self._y += 100
+			# self._y += 50
 
 			gamecolor = (150, 150, 200)
         	gameButton = Button(gamepos, gameshape, gamecolor, 0, "Game# " + str(number), (0,0,0), 32) 
@@ -62,6 +62,7 @@ class Lobby:
 	def update(self, mousePos):
 		for button in self._buttons:
 			if button.collide(mousePos):
+				print button.text
 				return button.text		#'Create Game' or 'Game# n'
 
 	def draw(self, view):
