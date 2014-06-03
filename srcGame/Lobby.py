@@ -20,7 +20,6 @@ class Lobby:
 		self._buttons.append(createGameButton)
 
 	def add_game(self):
-		print(len(self._buttons))
 		if len(self._buttons) < 11:
 			global number
 			number += 1
@@ -32,11 +31,28 @@ class Lobby:
 			# self._y += 50
 
 			gamecolor = (150, 150, 200)
-			gameButton = Button(gamepos, gameshape, gamecolor, 0, "Game# " + str(number), (0,0,0), 32) 
+			gameButton = Button(gamepos, gameshape, gamecolor, 0, "Game" + str(number), (0,0,0), 32) 
 
 			self._buttons.append(gameButton)
 			return gameButton.text
 		return ""
+	
+	def add_button(self, button_text):
+		if len(self._buttons) < 11:
+			gamepos = self._x, 50*len(self._buttons)
+			gameshape = self._width/6, self._height/9
+
+			gamecolor = (150, 150, 200)
+			gameButton = Button(gamepos, gameshape, gamecolor, 0, button_text, (0,0,0), 32) 
+
+			self._buttons.append(gameButton)
+	
+	def has(self, button_text):
+		for button in self._buttons:
+			if button.text == button_text:
+				return True
+			else:
+				return False
 
 	def remove_game(self, button_text):
 		for button in self._buttons:
@@ -66,7 +82,6 @@ class Lobby:
 	def update(self, mousePos):
 		for button in self._buttons:
 			if button.collide(mousePos):
-				print button.text
 				return button.text		#'Create Game' or 'Game# n'
 
 	def draw(self, view):

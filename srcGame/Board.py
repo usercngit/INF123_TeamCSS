@@ -51,10 +51,10 @@ class Board:
         
         self._distBetweenDots = lineLength
         
-        self._dotcolor = (255,0,0)
+        self._dotcolor = (200,50,50)
         self._dotshape = (self._dotSize, self._dotSize)
         
-        self._linecolor = (255,255,255)
+        self._linecolor = (100,100,100)
         self._linewideshape = (lineLength, lineWidth)
         self._linetallshape = (lineWidth, lineLength)
         
@@ -214,6 +214,7 @@ class Board:
             
             else:
                 self._objects['lines'][index].linewidth = 0
+                self._objects['lines'][index].color = self.current_player()._color
                 self._validLines.remove(index)
                 #if no boxes are scored, change player
                 if not self.update_boxes(index):
@@ -257,8 +258,6 @@ class Board:
         return self._ended
     
     def remove_player(self, player):
-        if self.current_player() == player:
-            self._playerControl.next()
         self._playerControl.remove_player(player)
         return self._playerControl.is_empty()
         
@@ -270,6 +269,9 @@ class Board:
             
     def current_player(self): #returns the player
         return self._playerControl.current()
+    
+    def is_full(self):
+        return self._playerControl.is_full()
 
 class PlayerControl:
     def __init__(self, pos, player_no):
@@ -281,22 +283,32 @@ class PlayerControl:
         self._players = [] #player list
         
     def current(self):
-        return self._players[self._currentPlayer]
+        if not self.is_empty():
+            return self._players[self._currentPlayer]
      
     def add_player(self, player):
         if len(self._players) < self._player_no:
             x,y = self.pos
             player._rep.pos = (x, (50*len(self._players)))
-            if len(self._players) == 0:
+            if self.is_empty():
                 player.set_color(player._color)
             self._players.append(player)
             return True
         return False
             
     def remove_player(self, player):
+        #logic for altering the player list on a removal
         if player in self._players:
             self._players.remove(player)
-            
+            if not self.is_empty():
+                self._currentPlayer = (self._currentPlayer) % len(self._players)
+                self.current().set_color(self.current()._color)
+                
+                
+        for player in self._players:
+            gamepos = player._rep.pos[0], 50*((self._players.index(player)))
+            player._rep.pos = gamepos
+        
     def next(self):
         self.current().set_color((0,0,0))
         self._currentPlayer = (self._currentPlayer + 1) % len(self._players)
