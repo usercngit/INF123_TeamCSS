@@ -290,6 +290,7 @@ class PlayerControl:
         if len(self._players) < self._player_no:
             x,y = self.pos
             player._rep.pos = (x, (50*len(self._players)))
+            player._score = 0
             if self.is_empty():
                 player.set_color(player._color)
             self._players.append(player)
